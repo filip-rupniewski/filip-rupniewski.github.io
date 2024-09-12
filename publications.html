@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Publications</title>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+    </script>
+    <link href="css/stylesheet.css" rel="stylesheet">
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <script>
+        $(document)
+            .ready(function() {
+                $('a[href^="#"]')
+                    .on('click', function(e) {
+                        e.preventDefault();
+
+                        var target = this.hash,
+                            $target = $(target);
+                        var menuHeight = $('#menu')
+                            .height() + 25;
+
+                        $('html, body')
+                            .stop()
+                            .animate({
+                                'scrollTop': $target.offset()
+                                    .top - menuHeight
+                            }, 900);
+                    });
+            });
+    </script>
+</head>
+
+<body>
+    <div class="container">
+        <div id="menu">
+            <div class="header">
+                <div class="left">
+                    <h3 style="color:#08298A;"> Publications of Filip Rupniewski </h3>
+                </div>
+                <br>
+            </div>
+            <div class="clear"></div>
+            <div class="menu-points"><a href="#JournalPublications">Articles </a> | <a href="#Theses" />Theses </a>
+            </div>
+        </div>
+        <br>
+        <div class="sections">
+            <section id="JournalPublications" class="page-content">
+                <div class="container-fluid">
+                    <div class="container">
+                        <div class="row skin-gutter-wide">
+                            <div class="col-lg-10 col-lg-offset-1 col-md-11 col-md-offset-1">
+                                <h4 style="color:#0B614B;">Articles</h4>
+                            </div>
+                        </div>
+                        <div class="row skin-gutter-wide zmsrow-ZMSTextarea">
+                            <div class="col-lg-8 col-lg-offset-1 col-md-10 col-md-offset-1">
+                                <!-- ZMSTextarea.standard_html -->
+                                <div id="e308680">
+                                    <ol>
+                                        <li><em>
+                                            <a class="dhtgD" href="https://arxiv.org/abs/1902.06582"><em>On Strassen&#39;s rank additivity for small three-way tensors </em></a>
+                                            </em>
+                                            <br /> Jarosław Buczyński, Elisa Postinghel, Filip Rupniewski
+                                            <br /> SIAM J. Matrix Anal. Appl., 41(1), 106&ndash;133. (28 pages), <a href="https://doi.org/10.1137/19M1243099">https://doi.org/10.1137/19M1243099</a>
+                                        </li>
+                                        <li><em>
+                                            <a class="dhtgD" href="Maciej Gałązka, Tomasz Mańdziuk, Filip Rupniewski"><em>Distinguishing secant from cactus varieties </em></a>
+                                            </em>
+                                            <br /> Maciej Gałązka, Tomasz Mańdziuk, Filip Rupniewski
+                                            <br /> Foundations of Computational Mathematics, (37 pages), <a href="https://doi.org/10.1007/s10208-022-09566-8">https://doi.org/10.1007/s10208-022-09566-8</a>
+                                        </li>
+                                        <li><em>
+                                            <a class="dhtgD" href="https://arxiv.org/abs/2209.11040"><em>Tensor rank of the direct sum of two copies of 2×2 matrix multiplication tensor is 14 </em></a>
+                                            </em>
+                                            <br /> Filip Rupniewski
+                                            <!--<br /> SIAM J. Matrix Anal. Appl., 41(1), 106&ndash;133. (28 pages), <a href="https://doi.org/10.1137/19M1243099">https://doi.org/10.1137/19M1243099
+                                            --></a>
+                                        </li>
+                                        <li><em>
+                                            <a class="dhtgD" href="https://arxiv.org/abs/2212.12219"><em>Countably many asymptotic tensor ranks </em></a>
+                                            </em>
+                                            <br /> Andreas Blatter, Jan Draisma, Filip Rupniewski
+                                             <!--<br /> SIAM J. Matrix Anal. Appl., 41(1), 106&ndash;133. (28 pages), <a href="https://doi.org/10.1137/19M1243099">https://doi.org/10.1137/19M1243099</a>-->
+                                        </li>
+                                        <li><em>
+                                            <a class="dhtgD" href="https://arxiv.org/abs/2211.12319"><em>A Tensor Restriction Theorem over Finite Fields</em></a>
+                                            </em>
+                                            <br /> Andreas Blatter, Jan Draisma, Filip Rupniewski
+                                             <!--<br /> SIAM J. Matrix Anal. Appl., 41(1), 106&ndash;133. (28 pages), <a href="https://doi.org/10.1137/19M1243099">https://doi.org/10.1137/19M1243099</a>-->
+                                        </li>
+                                    </ol>
+                                </div>
+                                <!-- /ZMSTextarea.standard_html -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- </section>
+	   <section id="ConferenceProceedings" class="page-content">
+                <div class="container-fluid">
+                    <div class="container">
+                        <div class="row skin-gutter-wide">
+                            <div class="col-lg-10 col-lg-offset-1 col-md-11 col-md-offset-1">
+                                 <h4 style="color:#0B614B;">Conference Proceedings</h4>
+                            </div>
+                        </div>
+                        <div class="row skin-gutter-wide zmsrow-ZMSTextarea">
+                            <div class="col-lg-8 col-lg-offset-1 col-md-10 col-md-offset-1"> 
+                                <!-- ZMSTextarea.standard_html -->
+                <!-- <div id="e308680">
+                                    <ol>
+                                    
+                                    </ol>
+                                 </div>
+                                <!-- /ZMSTextarea.standard_html -->
+                <!--</div>
+                        </div>
+                    </div>
+                </div> 
+            </section> -->
+                <section id="Theses" class="page-content">
+                    <div class="container-fluid">
+                        <div class="container">
+                            <div class="row skin-gutter-wide">
+                                <div class="col-lg-10 col-lg-offset-1 col-md-11 col-md-offset-1">
+                                    <h4 style="color:#0B614B;">Theses</h4>
+                                </div>
+                            </div>
+                            <div class="row skin-gutter-wide zmsrow-ZMSTextarea">
+                                <div class="col-lg-8 col-lg-offset-1 col-md-10 col-md-offset-1">
+                                    <!-- ZMSTextarea.standard_html -->
+                                    <div id="e308738">
+                                        <ol>
+                                            <li><a class="dhtgD" href="https://www.mimuw.edu.pl/~jabu/teaching/Theses/PhD_thesis_Rupniewski.pdf"><em>Ranks of tensors, related varieties and rank additivity property for small cases </em></a>
+                                                <br /> F. Rupniewski
+                                                <br /> Advisor: Prof. Dr. J. Buczyński
+                                                <br /> Ph.D. thesis, Polish Academy of Sciences, 2022
+                                            </li>
+                                            <li><a class="dhtgD" href="https://www.mimuw.edu.pl/~jabu/teaching/Theses/MSc_thesis_Rupniewski.pdf"><em>Tensors of border rank 3 and Strassen's additivity conjecture. </em></a>
+                                                <br /> F. Rupniewski
+                                                <br /> Advisor: Prof. Dr. J. Buczyński
+                                                <br /> MSc thesis, Univeristy of Warsaw, 2017
+                                            </li>
+                                        </ol>
+                                    </div>
+                                    <!-- /ZMSTextarea.standard_html -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+        </div>
+        <footer>
+            <hr>
+            <div class="centerFlex"> Copyright &copy; Thomas Wihler </div>
+            <br>
+        </footer>
+    </div>
+</body>
+
+</html>

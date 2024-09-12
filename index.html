@@ -1,203 +1,149 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <meta charset="utf-8">
-    <title>aktualne wykresy COVID-19 w Polsce</title>
-<!--    <link rel="icon" href="https://raw.githubusercontent.com/filip-covid/filip-covid.github.io/main/images/virus_iconT.png">
--->
-    <link rel="icon" href="./images/virus_iconT.png">
+  <head>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+   <link href="css/stylesheet.css" rel="stylesheet">
+      <!-- Latest compiled and minified CSS -->
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <meta charset="UTF-8" />
 
-<script type="text/javascript">
-  window.heap=window.heap||[],heap.load=function(e,t){window.heap.appid=e,window.heap.config=t=t||{};var r=document.createElement("script");r.type="text/javascript",r.async=!0,r.src="https://cdn.heapanalytics.com/js/heap-"+e+".js";var a=document.getElementsByTagName("script")[0];a.parentNode.insertBefore(r,a);for(var n=function(e){return function(){heap.push([e].concat(Array.prototype.slice.call(arguments,0)))}},p=["addEventProperties","addUserProperties","clearEventProperties","identify","resetIdentity","removeEventProperty","setEventProperties","track","unsetEventProperty"],o=0;o<p.length;o++)heap[p[o]]=n(p[o])};
-  heap.load("1829875653");
-</script>
+    <title>Dr. Filip Rupniewski</title>
 
-<!-- Start of Woopra Code -->
-<script>
-  (function(){
-    var t,i,e,n=window,o=document,a=arguments,s="script",r=["config","track","identify","visit","push","call","trackForm","trackClick"],c=function(){var t,i=this;for(i._e=[],t=0;r.length>t;t++)(function(t){i[t]=function(){return i._e.push([t].concat(Array.prototype.slice.call(arguments,0))),i}})(r[t])};for(n._w=n._w||{},t=0;a.length>t;t++)n._w[a[t]]=n[a[t]]=n[a[t]]||new c;i=o.createElement(s),i.async=1,i.src="//static.woopra.com/js/w.js",e=o.getElementsByTagName(s)[0],e.parentNode.insertBefore(i,e)
-  })("woopra");
+    <link href="css/stylesheet.css" rel="stylesheet" />
 
-  woopra.config({
-      domain: 'filip-covid.github.io'
-  });
-  woopra.track();
-</script>
-<!-- End of Woopra Code -->
+  </head>
 
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<style>
-.footer {
-   position: static;
-   left: 0;
-   bottom: 0;
-   width: 100%;
-   padding: 10px 10px 10px 10px; 
-   background-color: rgb(179, 179, 179);
-   color: white;
-   text-align: center;
-}
-</style>
+  <body>
 
-</head>
-<!-- <body style="background-color:rgb(242, 242, 242);">
--->
-<body>
+    <div class="container">
 
-    
+      <div class="header" style="text-aligh:left;"> <h3>Dr. Filip Rupniewski</h3> </div>
+      <hr class="style-one" />
 
-    <h1>Przebieg epidemii COVID-19 w Polsce</h1>
-<!--	<p>Strona została zaktualizowania (m/d/y): <span id="demo"></span>.</p>
-	<script>
-		document.getElementById("demo").innerHTML = document.lastModified;
-	</script>
-	-->
-	<SCRIPT LANGUAGE="JavaScript">
-	DayName = new Array(7) 
- DayName[0] = "niedziela, " 
- DayName[1] = "poniedziałek, " 
- DayName[2] = "wtorek, " 
- DayName[3] = "środa, " 
- DayName[4] = "czwartek, " 
- DayName[5] = "piątek, " 
- DayName[6] = "sobota, "
+      <div class="content" id="content">
 
- MonthName = new Array(12) 
- MonthName[0] = "stycznia " 
- MonthName[1] = "lutego " 
- MonthName[2] = "marca " 
- MonthName[3] = "kwietnia " 
- MonthName[4] = "maja " 
- MonthName[5] = "czerwca " 
- MonthName[6] = "lipca " 
- MonthName[7] = "sierpnia " 
- MonthName[8] = "września " 
- MonthName[9] = "października " 
- MonthName[10] = "listopada " 
- MonthName[11] = "grudnia " 
+        <div class="me" >
+          <div class="photo"> <p><img id="photograph" src="images/rupniewski.jpg" alt="Personal picture of Dr. Filip Rupniewski" style="max-width: 60%; float:left; margin:30px 0px 20px 20px;" /></p> </div>
 
-update = new Date(document.lastModified)
-theMonth = update.getMonth() + 1
-theDay = update.getDay()
-theDate = update.getDate()
-theYear = update.getFullYear()
-theHour = update.getHours()
-theMinute = update.getMinutes() 
-theSecond = update.getSeconds() 
-DataPoPolsku = update.toLocaleDateString()
-GodzinaPoPolsku = update.toLocaleTimeString()
-//document.writeln("<I>Ostatnia aktualizacja: " + DayName[theDay] + theDate + " " + MonthName[theMonth-1] + " " + theYear + ", godz. " + GodzinaPoPolsku + " " +"</I>")
-document.writeln(" Od marca 2022 brak nowych uaktualnien bazy danych Michała Rogalskiego. Do momentu zmiany dostawcy danych wykresy nie będą aktualizowane.")
-</SCRIPT>
-<script LANGUAGE="JavaScript">
-document.write(new Date(document.lastModified).date('d.m.Y'));
-</script>
+          <!-- Contact Information -->
+          <div id="child" >
+            <h4>Tensor geometry and applications</h4>
 
-<p>
- <a href="./index.html">[Strona główna]</a>
- <a href="./english.html">[English version]</a>
- <a href="./wybrane_powiaty.html">[Wybrane powiaty]</a>
- <a href="./zgony.html">[Zgony]</a>
- <a href="./szczepienia.html">[Szczepienia]</a>
- <a href="./zrodla.html">[Źródła]</a> 
- <a href="./kontakt.html">[Kontakt]</a> 
-</p>	
+            <div class="text">
+              <a href="http://www.unibe.ch/" target="_blank"><p>Universität Bern </p></a>
+              <a href="http://www.math.unibe.ch/" target="_blank"><p>Mathematisches Institut </p></a>
+              <p>Alpeneggstrasse 22</p>
+              <p>CH-3012 Bern</p>
+              <p>Schweiz</p>
+              <br />
+              <p> Office: 103</p>
+              <p>Phone: +41 31 684 88 33 </p>
+              <p>E-mail: <a href="mailto:filip.rupniewski@math.unibe.ch"> filip.rupniewski@math.unibe.ch </a> </p>
+	      <p> Personal website: <a href="https://sites.google.com/view/rupniewski/"target="_blank"> https://unibe.ch/rupniewski/ </a> </p> 	
+            </div>
+          </div>
+        </div>
 
-<p style="color:white;">koronawirus SARS-CoV-2, covid19</p>
+        <hr class="style-two" />
 
-<!-- szerokość to 1209, wysokość 403 -->
-<!-- 
-<div id="rolka" class="noborder" style="overflow: auto; width:809px; height: 430px;">
-<img src="./images/kwarantanna,_aktywni_chorzy,_hospitalizowani,_pod_respiratorem,_zmarli_zarażeni_log.svg" alt="kwarantanna,_aktywni_chorzy,_hospitalizowani,_pod_respiratorem,_zmarli_zarażeni_log" height="403" width="1209"/>
-</div>
-<script type="text/javascript">
-document.getElementById('rolka').scrollLeft = 1000;
-</script>
--->
+        <div class=wrapper>
 
-<p>Codziennie aktualizowane wykresy dotyczące rozwoju epidemii ostrej choroby zakaźnej układu oddechowego wywołej zakażeniem koronawirusem SARS-CoV-2 w Polsce.</p>
+        <!-- Research Paragraph -->
+        <h4 style="color:#0B614B;"> Research</h4>
 
-<p>Na poniższych wykresach, pogrubionymi kolorowymi liniami zaznaczone są 7 dniowe średnie kroczące liczb reprezentowanych przez cienkie szare linie. Powiększ, żeby zobaczyć siatkę z podziałem na dni.</p>
-<h4 style="color:black;">Liczba osób w kwarantannie, aktywnie chorych, hospitalizowanych, podłączonych do respiratora, zmarłych z chorobami współistniejącymi z COVID-19 </h4>
-<p style="color:black;"> odpowiednio w kolorach zielonym, niebieskim, żółtym, czerwonym i fioletowym.<br>
+        <div class="text">
+          <div class="indent"> I am a member of the Applied Algebraic Geometry Group led by <a class="dhtgD" href="https://mathsites.unibe.ch/tretter/" target="_blank"> Prof. Dr. Jan Draisma </a>. Our research is focused on tensors, their geometry and properties, with applications to complexity theory.
 
-    <img src="./images/kwarantanna,_aktywni_chorzy,_hospitalizowani,_pod_respiratorem,_zmarli_zarażeni_log.svg" alt="kwarantanna,_aktywni_chorzy,_hospitalizowani,_pod_respiratorem,_zmarli_zarażeni_log" height="400"/>
-<!--    <img src="./images/kwarantanna,_aktywni_chorzy,_hospitalizowani,_pod_respiratorem,_zmarli_zarażeni,_zmarli_z_powodu_Covid19_log.svg" alt="kwarantanna,_aktywni_chorzy,_hospitalizowani,_pod_respiratorem,_zmarli_zarażeni,_zmarli_z_powodu_Covid19_log" height="400"/>
--->
-<br>W powyższym wykresie na osi pionowej skala jest logarytmiczna.</p>
+            <ul>
+              <li> tensor ranks (rank, border rank, asymptotic rank, etc.)</li>
+              <li> Veronese, Segre and Segre-Veronese varieties</li>
+              <li> Secant varieties</li>
+              <li> Polynomial functors </li>
+            </ul>
+            <!-- Other personal interests are: dependence of the spectrum on domain perturbations, asymptotic analysis and homogenization theory, eigenvalue problems with spectral parameter on the boundary condition, overdetermined spectral problems, geometric aspects of quasilinear eigenvalue problems.
+            -->
+          </div>
+        </div>
+        <hr class="style-two" />
 
-<h4 style="color:black;">Nowe pozytywne przypadki w Warszawie </h4>
-<p style="color:black;">
-(z podziałem na  <a href="./images/Progi_etapow_bezpieczenstwa_na100.jpeg">strefy</a>):<br>
-    <img src="./images/powiaty/Powiat m. st. Warszawa.svg" alt="Powiat m. st. Warszawa" height="400"/><br>
-    Podobne wykresy dla <a href="./images/Progi_etapow_bezpieczenstwa_na100.jpeg">wybranych powiatów</a>.
-    </p>
-<h4 style="color:black;">Nowe pozytywne przypadki w Polsce </h4>
-<p style="color:black;">
- (z podziałem na
- <a href="./images/Progi_etapow_bezpieczenstwa.jpeg">strefy</a>):
- <br>
-    <img src="./images/Nowe_pozytywne_przypadki.svg" alt="Nowe pozytywne przypadki" height="400"/>
-</p>
-<h4 style="color:black;">Dobowa liczba wykonanych testów</h4>
-<p>
-    <img src="./images/Dobowa_liczba_wykonanych_testów.svg" alt="Dobowa liczba wykonanych testow" height="400"/>
-<h4 id="odsetek_testow_pozytywnych" style="color:black;">Odsetek testów pozytywnych</h4>
-<p>
-    <img src="./images/Odsetek_testów_pozytywnych.svg" alt="Odsetek_testów_pozytywnych" height="400"/>
-<h4 style="color:black;">Liczba osób objętych kwarantanną</h4>
-<p>
-    <img src="./images/Liczba_osób_objętych_kwarantanną.svg" alt="Liczba_osób_objętych_kwarantanną" height="400"/>
-<h4 style="color:black;">Liczba aktywnych przypadków</h4>
-<p>
-    <img src="./images/Liczba_aktywnych_przypadków.svg" alt="Liczba_aktywnych_przypadków" height="400"/>
-<h4 style="color:black;">Liczba osób hospitalizowanych</h4>
-<p>
-    <img src="./images/Liczba_osób_hospitalizowanych.svg" alt="Liczba_osób_hospitalizowanych" height="400"/>
-<h4 style="color:black;">Liczba zajętych respiratorów (stan ciężki)</h4>
-<p>
-    <img src="./images/Liczba_zajętych_respiratorów_(stan_ciężki).svg" alt="Liczba zajętych respiratorów (stan ciężki)" height="400"/>
-<h4 style="color:black;">Nowe zgony zarażonych</h4>
-<p>
-    <img src="./images/Nowe_zgony_zarażonych.svg" alt="Nowe_zgony_zarażonych" height="400"/>
-<!--
-<h4 style="color:black;">Zmarli z powodu Covid19</h4>
-<p>
-    <img src="./images/Zmarli_z_powodu_Covid19.svg" alt="Zmarli_z_powodu_Covid19" height="400"/>
--->
-<h4 style="color:black;">Liczba osób objętych nadzorem epidemiologicznym </h4>
-<p>
- (26.01.2021 MZ podało ostatnie dane) <br>
-    <img src="./images/Liczba_osób_objętych_nadzorem_epidemiologicznym.svg" alt="Liczba osób objętych nadzorem epidemiologicznym" height="400"/>
-<h4 style="color:black;">Odsetek podłączonych do respiratora wśród aktywnych chorych</h4>
-<p>
-    <img src="./images/Odsetek_podłączonych_do_respiratora_wśród_aktywnych_chorych.svg" alt="Odsetek_podłączonych_do_respiratora_wśród_aktywnych_chorych" height="400"/>
-<h4 style="color:black;">Odsetek hospitalizowanych wśród aktywnych chorych</h4>
-<p>
-    <img src="./images/Odsetek_hospitalizowanych_wśród_aktywnych_chorych.svg" alt="Odsetek_hospitalizowanych_wśród_aktywnych_chorych" height="400"/>
-<h4 style="color:black;">Odsetek podłączonych do respiratora wśród hospitalizowanych</h4>
-<p>
-    <img src="./images/Odsetek_podłączonych_do_respiratora_wśród_hospitalizowanych.svg" alt="Odsetek_podłączonych_do_respiratora_wśród_hospitalizowanych" height="400"/>
+        <!-- Publications -->
+        <h4>Publications</h4>
 
-<br>
-<br>
-<br>
-<br>
-<!--
-<p>
- <a href="./zrodla.html">[Źródła]</a> 
-</p>	
--->
-    
-    <script>var clicky_site_ids = clicky_site_ids || []; clicky_site_ids.push(101292667);</script>
-<script async src="//static.getclicky.com/js"></script>
-<noscript><p><img alt="Clicky" width="1" height="1" src="//in.getclicky.com/101292667ns.gif" /></p></noscript>
+        <div class="text">
+          <p>For a complete list see <a href="publications.html" target="_blank">here</a>.</p>
+          <hr class="style-two" />
+        </div>
 
-    </body>
-     <footer>   
- <div class="footer">
-<a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Licencja Creative Commons" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/80x15.png" /></a><span xmlns:dct="http://purl.org/dc/terms/" property="dct:title">Graphs on Covid-19 in Poland</span> by <a xmlns:cc="http://creativecommons.org/ns#" href="filip-covid.github.io" property="cc:attributionName" rel="cc:attributionURL">filip-covid.github.io</a> is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">(CC BY 4.0) Uznanie autorstwa 4.0 Międzynarodowe</a>.
-</div>
-</footer> 
+        <!-- Teaching -->
+        <h4> Teaching </h4>
 
+	<div class="text">
+	Fall semester 2022/2023:
+          <ul>
+            <li> Linear Algebra 1 </li>
+            <li> Mathematics f&#252r Naturwissenschaften</li>
+          </ul>
+        </div>
+
+
+        <div class="text">
+	Spring semester 2022/2023:
+          <ul>
+            <li> Seminar: algebra and expander graphs</li>
+            <li> Galois Theory  </li>
+          </ul>
+        </div>
+
+        <hr class="style-two" />
+
+        <!-- Conferences -->
+        <h4> Selected attended conferences </h4>
+
+        <ul>
+          
+	<li id="h.p_p2DUu9-NYck3" class="zfr3Q TYR86d">Invited talk at <a class="dhtgD" href="https://indico.math.cnrs.fr/event/9627/" target="_blank"><em>Secant v. Cactus - workshop</em></a><em>, </em>Toulouse (France), 9-12 May, 2023.</li>
+	<li id="h.p_LVLya1fnvbh4" class="zfr3Q TYR86d">Participation at <a class="dhtgD" href="https://sites.google.com/view/commalgintorino/home" target="_blank"><em>International Conference on Elliptic and Parabolic Problems</em></a> Turin, Italy, 22-24 May, 2023.</li>
+	<li id="h.p_uVRv_t4Vvbh5" class="zfr3Q TYR86d">Invited talk at ,  <a class="dhtgD" href="https://www.siam.org/conferences/cm/conference/ag23" target="_blank"><em>"SIAM Conference on Applied Algebraic Geometry (AG23)"</em></a> </a>, Minisymposium in "Spectral analysis and homogenization of PDEs", Eindhoven (Netherlands), 10-14 July, 2023</li>
+        </ul>
+
+        <hr class="style-two" />
+
+	<!-- Collaborators -->
+	<h4> Former and current collaborators </h4>
+	
+	<ul>
+	  <li> Current research team: 
+	  <a class="dhtgD" href="https://mathsites.unibe.ch/jdraisma/index.php?" target="_blank"> Prof. Dr. Jan Draisma</a>, 
+	  <a class="dhtgD" href="https://www.math.unibe.ch/about_us/personen/blatter_andreas/index_eng.html" target="_blank"> Andreas Blatter</a>, 
+	  <a class="dhtgD" href="https://www.math.unibe.ch/about_us/personen/tairi_nafie/index_eng.html" target="_blank"> Nafie Tairi</a>, 
+	  <a class="dhtgD" href="https://www.math.unibe.ch/about_us/personen/biaggi_benjamin/index_eng.html" target="_blank"> Benjamin Biaggi</a>,
+	  <a class="dhtgD" href="https://www.math.unibe.ch/about_us/personen/danelon_alessandro/index_eng.html" target="_blank"> Alessandro Danelon</a> </li>
+	  
+      <li> Collaborators: 	  
+      <a class="dhtgD" href="https://mathsites.unibe.ch/jdraisma/index.php?" target="_blank"> Prof. Dr. Jan Draisma</a>,
+	  <a class="dhtgD" href="https://www.math.unibe.ch/about_us/personen/blatter_andreas/index_eng.html" target="_blank"> Andreas Blatter</a>,
+	  <a class="dhtgD" href="https://mimuw.edu.pl/~jabu" target="_blank"> prof. dr. Jarosław Buczyński</a>,
+	  <a class="dhtgD" href="https://sites.google.com/site/elisapostinghel/" target="_blank"> prof. Elisa Postinghel</a>,
+	  <a class="dhtgD" href="https://www.mimuw.edu.pl/~mgalazka/" target="_blank"> Maciej Gałązka</a>,
+	  <a class="dhtgD" href="https://tensordec.maths.unitn.it/#who" target="_blank"> dr. Tomasz Mańdziuk</a>
+	  <li> Former research team (Institute of Mathematics, Polish Academy of Sciences): <a class="dhtgD" href="https://mimuw.edu.pl/~jabu" target="_blank"> prof. dr. Jarosław Buczyński</a>,
+	  <a class="dhtgD" href="https://www.mimuw.edu.pl/~mgalazka/" target="_blank"> Maciej Gałązka</a>,
+	  <a class="dhtgD" href="https://tensordec.maths.unitn.it/#who" target="_blank"> dr. Tomasz Mańdziuk</a>
+          </li>
+        </ul>
+
+        </div>
+          
+      </div>
+    </div>
+
+
+
+    <!-- Footer with copyright symbol -->
+    <footer>
+      <hr />
+      <div class="CenterFlex"> Copyright &copy; Thomas P. Wihler </div>
+      <br />
+    </footer>
+  </body>
 </html>
