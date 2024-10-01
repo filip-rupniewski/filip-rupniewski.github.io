@@ -1,0 +1,1 @@
+A collection of graphs and tables related to the used car market in Poland and Switzerland. This was created based on data from the largest used car selling websites in Poland and Switzerland.
