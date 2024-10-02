@@ -60,6 +60,18 @@ def losuj_numer(tablica_powtorzen):
         tmp -= wartosc
         if tmp < 0:
             return i
+    
+# def losuj_numer(tablica_powtorzen):
+#     # Create a list of non-zero indices and their corresponding weights
+#     non_zero_indices = [i for i in range(len(tablica_powtorzen)) if tablica_powtorzen[i] > 0]
+#     if not non_zero_indices:
+#         return None  # No words left to repeat
+#     # Create a list of weights based on the values in tablica_powtorzen
+#     weights = [tablica_powtorzen[i] for i in non_zero_indices]
+#     # Choose a word based on weighted random selection
+#     result = random.choices(non_zero_indices, weights=weights, k=1)[0]
+#     print("losowanie" + str(result))
+#     return result
 
 def popraw(zly, dobry):
     # Funkcja do zaznaczania błędów
@@ -81,19 +93,32 @@ def wypisz_najtrudniejsze():
         print("\nthe most difficult pairs of words:")
     else:
         print("\nnajtrudniejsze pary wyrazów:")
-    for i in range(len(najtrudniejsze)):
+
+    # Sortowanie malejące na podstawie wartości w tablicy 'najtrudniejsze', a potem alfabetyczne według polskich słów
+    sorted_indices = sorted(
+        range(len(najtrudniejsze)), 
+        key=lambda i: (-najtrudniejsze[i], polski[i])
+    )
+    
+    # Wypisywanie najtrudniejszych par
+    for i in sorted_indices:
         if najtrudniejsze[i] > 0:
-            print(f'{polski[i]} - {angielski[i]}')
-    # Zapisuje najtrudniejsze wyrazy do pliku CSV
+            print(f'{polski[i]} - {angielski[i]} : {najtrudniejsze[i]}')
+
+    # Zapis do pliku CSV
     date_str = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")  # Format current date with hour, minute, and second
     filename = f'najtrudniejsze/{nazwa_pliku}_najtrudniejsze_{date_str}.csv'
     with open(filename, 'w', newline='', encoding='utf-8') as f:
         writer = csv.writer(f, delimiter=";")
         writer.writerow(["1 język", "2 język", "Liczba powtórzeń"])
-        for i in range(len(najtrudniejsze)):
+        
+        # Zapisanie najtrudniejszych par do pliku CSV
+        for i in sorted_indices:
             if najtrudniejsze[i] > 0:
                 writer.writerow([polski[i], angielski[i], najtrudniejsze[i]])
+    
     print(f'The most difficult pairs were written to {filename}' if j_en else f'Najtrudniejsze pary wyrazów zostały zapisane do pliku {filename}')
+
 
 def nauka(polski, angielski, powtorz, dzwiek):
     if j_en:
@@ -117,13 +142,18 @@ def nauka(polski, angielski, powtorz, dzwiek):
             i = losuj_numer(powtorz)  # Normal random selection if no previous wrong word
         remaining = sum(powtorz)
         
+        remaining_words = 0
+        for j in powtorz:
+            if j !=0:
+                remaining_words+=1
+        
         komunikat = str(powtorz)
 
         # Input section
         if j_en:
-            komunikat += f"\n{remaining} questions remain.\n" + "To finish studying, write \"q!\" and press ENTER.\n" + f"Write the translation of the word {polski[i]}: "
+            komunikat += f"\n{remaining} questions and {remaining_words} unique pairs remain.\n" + "To finish studying, write \"q!\" and press ENTER.\n" + f"Write the translation of the word\n{' ' * 34}{polski[i]}: "
         else:
-            komunikat += f"\n{remaining} pytań do końca.\n" + "Żeby zakończyć naukę, wpisz \"q!\" i wciśnij ENTER.\n" + f"Podaj tłumaczenie wyrazu {polski[i]}: "
+            komunikat += f"\n{remaining} pytań oraz {remaining_words} różnych par do końca.\n" + "Żeby zakończyć naukę, wpisz \"q!\" i wciśnij ENTER.\n" + f"Podaj tłumaczenie wyrazu\n{' ' * 25}{polski[i]}: "
             
         wyraz = input(komunikat)
 
@@ -136,12 +166,12 @@ def nauka(polski, angielski, powtorz, dzwiek):
 
         if wyraz_normalized == angielski_normalized:
             print("correct!" if j_en else "dobrze!")
-            powtorz[i] -= 1
+            powtorz[i] = max(0, powtorz[i] - 1)  # Ensure the value doesn't go below zero
             if dzwiek: 
                 subprocess.call("cvlc --play-and-exit dzwiek/prawidlowa.wav 2> /dev/null", shell=True)
         else:
             poprawione = popraw(wyraz, angielski[i])
-            print(f"{' ' * (11+len(polski[i]))}the correct answer is: {poprawione}" if j_en else f"{' ' * (2+len(polski[i]))}prawidłowa odpowiedź to: {poprawione}")
+            print(f"{' ' * (13+len(polski[i]))}the correct answer is: {poprawione}" if j_en else f"{' ' * (2+len(polski[i]))}prawidłowa odpowiedź to: {poprawione}")
             powtorz[i] += 2
             najtrudniejsze[i] += 1
             if dzwiek: 
