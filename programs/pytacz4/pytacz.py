@@ -16,7 +16,7 @@ def lista_plikow(ścieżka):
         if nazwa.endswith('.csv'):
             pełna_ścieżka = os.path.join(ścieżka, nazwa)
             with open(pełna_ścieżka, 'r', encoding='utf-8') as f:
-                liczba_linii = sum(1 for _ in f)
+                liczba_linii = sum(1 for linia in f if not linia.startswith('#'))
             pliki.append((nazwa, liczba_linii))
     return pliki
 
@@ -38,7 +38,7 @@ def zaimportuj(nazwa_pliku):
     # Wczytywanie bazy danych - dwóch kolumn do nauki: polski, angielski
     with open(nazwa_pliku, 'r', encoding='utf-8') as f:
         reader = csv.reader(f, delimiter=";")
-        zaimportowana_lista = list(reader)
+        zaimportowana_lista = [row for row in reader if not row[0].startswith('#')]
     polski, angielski = map(list, zip(*zaimportowana_lista))
     return polski, angielski
 
@@ -73,14 +73,36 @@ def losuj_numer(tablica_powtorzen):
 #     print("losowanie" + str(result))
 #     return result
 
+def levenshtein_distance(s1, s2):
+    # Calculate the Levenshtein distance between two strings
+    if len(s1) < len(s2):
+        return levenshtein_distance(s2, s1)
+
+    if len(s2) == 0:
+        return len(s1)
+
+    previous_row = range(len(s2) + 1)
+    for i, c1 in enumerate(s1):
+        current_row = [i + 1]
+        for j, c2 in enumerate(s2):
+            insertions = previous_row[j + 1] + 1
+            deletions = current_row[j] + 1
+            substitutions = previous_row[j] + (c1 != c2)
+            current_row.append(min(insertions, deletions, substitutions))
+        previous_row = current_row
+    return previous_row[-1]
+
 def popraw(zly, dobry):
     # Funkcja do zaznaczania błędów
+    # Find the closest correct word in 'dobry' to the incorrect word 'zly'
+    closest_word = min(dobry, key=lambda word: levenshtein_distance(zly, word))
+    
     wynik = ""
-    for i in range(len(dobry)):
-        if i < len(zly) and zly[i] == dobry[i]:
-            wynik += dobry[i]
+    for i in range(len(closest_word)):
+        if i < len(zly) and zly[i] == closest_word[i]:
+            wynik += closest_word[i]
         else:
-            wynik += dobry[i].upper()    
+            wynik += closest_word[i].upper()    
     return wynik
 
 def wypisz_najtrudniejsze():
@@ -119,6 +141,30 @@ def wypisz_najtrudniejsze():
     
     print(f'The most difficult pairs were written to {filename}' if j_en else f'Najtrudniejsze pary wyrazów zostały zapisane do pliku {filename}')
 
+# Function to evaluate the user's answer against the correct one
+def evaluate_answer(wyraz, angielski, i, polski, powtorz, najtrudniejsze, dzwiek, j_en):
+    # Normalize both user input and the correct answer
+    wyraz_normalized = unidecode(wyraz).strip().lower()
+    # Split the correct answer into options using '|' and normalize each option
+    angielski_options = [unidecode(option).strip().lower() for option in angielski[i].split('|')]
+
+    angielski_normalized = unidecode(angielski[i]).strip().lower()
+
+    if wyraz_normalized in angielski_options:
+        print("Correct!" if j_en else "Dobrze!")
+        powtorz[i] = max(0, powtorz[i] - 1)  # Ensure the value doesn't go below zero
+        if dzwiek: 
+            subprocess.call("cvlc --play-and-exit dzwiek/prawidlowa.wav 2> /dev/null", shell=True)
+        return False  # Indicates the answer was correct
+    else:
+        poprawione = popraw(wyraz, angielski_options)
+        print(f"{' ' * (13 + len(polski[i]))}The correct answer is: {poprawione}" if j_en else f"{' ' * (2 + len(polski[i]))}Prawidłowa odpowiedź to: {poprawione}")
+        powtorz[i] += 2
+        najtrudniejsze[i] += 1
+        if dzwiek: 
+            subprocess.call("cvlc --play-and-exit dzwiek/bledna.wav 2> /dev/null", shell=True)
+        input("[Enter]")
+        return True  # Indicates the answer was incorrect
 
 def nauka(polski, angielski, powtorz, dzwiek):
     if j_en:
@@ -160,24 +206,7 @@ def nauka(polski, angielski, powtorz, dzwiek):
         if wyraz == "q!":
             break
         
-        # Normalize both user input and the correct answer
-        wyraz_normalized = unidecode(wyraz).strip().lower()
-        angielski_normalized = unidecode(angielski[i]).strip().lower()
-
-        if wyraz_normalized == angielski_normalized:
-            print("correct!" if j_en else "dobrze!")
-            powtorz[i] = max(0, powtorz[i] - 1)  # Ensure the value doesn't go below zero
-            if dzwiek: 
-                subprocess.call("cvlc --play-and-exit dzwiek/prawidlowa.wav 2> /dev/null", shell=True)
-        else:
-            poprawione = popraw(wyraz, angielski[i])
-            print(f"{' ' * (13+len(polski[i]))}the correct answer is: {poprawione}" if j_en else f"{' ' * (2+len(polski[i]))}prawidłowa odpowiedź to: {poprawione}")
-            powtorz[i] += 2
-            najtrudniejsze[i] += 1
-            if dzwiek: 
-                subprocess.call("cvlc --play-and-exit dzwiek/bledna.wav 2> /dev/null", shell=True)
-            prev_wrong_index = i  # Mark the current word as wrong to ask it again next
-            input("[Enter]")
+        evaluate_answer(wyraz, angielski, i, polski, powtorz, najtrudniejsze, dzwiek, j_en)
         sys.stdout.flush()  # Ensures that the message is written out
     
     if j_en:
