@@ -16,7 +16,7 @@ def lista_plikow(ścieżka):
         if nazwa.endswith('.csv'):
             pełna_ścieżka = os.path.join(ścieżka, nazwa)
             with open(pełna_ścieżka, 'r', encoding='utf-8') as f:
-                liczba_linii = sum(1 for linia in f if not linia.startswith('#'))
+                liczba_linii = sum(1 for _ in f)
             pliki.append((nazwa, liczba_linii))
     return pliki
 
@@ -38,7 +38,7 @@ def zaimportuj(nazwa_pliku):
     # Wczytywanie bazy danych - dwóch kolumn do nauki: polski, angielski
     with open(nazwa_pliku, 'r', encoding='utf-8') as f:
         reader = csv.reader(f, delimiter=";")
-        zaimportowana_lista = [row for row in reader if not row[0].startswith('#')]
+        zaimportowana_lista = list(reader)
     polski, angielski = map(list, zip(*zaimportowana_lista))
     return polski, angielski
 
@@ -73,39 +73,17 @@ def losuj_numer(tablica_powtorzen):
 #     print("losowanie" + str(result))
 #     return result
 
-def levenshtein_distance(s1, s2):
-    # Calculate the Levenshtein distance between two strings
-    if len(s1) < len(s2):
-        return levenshtein_distance(s2, s1)
-
-    if len(s2) == 0:
-        return len(s1)
-
-    previous_row = range(len(s2) + 1)
-    for i, c1 in enumerate(s1):
-        current_row = [i + 1]
-        for j, c2 in enumerate(s2):
-            insertions = previous_row[j + 1] + 1
-            deletions = current_row[j] + 1
-            substitutions = previous_row[j] + (c1 != c2)
-            current_row.append(min(insertions, deletions, substitutions))
-        previous_row = current_row
-    return previous_row[-1]
-
 def popraw(zly, dobry):
     # Funkcja do zaznaczania błędów
-    # Find the closest correct word in 'dobry' to the incorrect word 'zly'
-    closest_word = min(dobry, key=lambda word: levenshtein_distance(zly, word))
-    
     wynik = ""
-    for i in range(len(closest_word)):
-        if i < len(zly) and zly[i] == closest_word[i]:
-            wynik += closest_word[i]
+    for i in range(len(dobry)):
+        if i < len(zly) and zly[i] == dobry[i]:
+            wynik += dobry[i]
         else:
-            wynik += closest_word[i].upper()    
+            wynik += dobry[i].upper()    
     return wynik
 
-def wypisz_najtrudniejsze():
+def wypisz_najtrudniejsze(sprawdzian=False):
     # Wypisuje najtrudniejsze wyrazy
     print("\n")
     if sum(najtrudniejsze) == 0:
@@ -130,6 +108,8 @@ def wypisz_najtrudniejsze():
     # Zapis do pliku CSV
     date_str = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")  # Format current date with hour, minute, and second
     filename = f'najtrudniejsze/{nazwa_pliku}_najtrudniejsze_{date_str}.csv'
+    if sprawdzian:
+        filename = f'najtrudniejsze/{nazwa_pliku}_sprawdzian_najtrudniejsze_{date_str}.csv'
     with open(filename, 'w', newline='', encoding='utf-8') as f:
         writer = csv.writer(f, delimiter=";")
         writer.writerow(["1 język", "2 język", "Liczba powtórzeń"])
@@ -141,35 +121,17 @@ def wypisz_najtrudniejsze():
     
     print(f'The most difficult pairs were written to {filename}' if j_en else f'Najtrudniejsze pary wyrazów zostały zapisane do pliku {filename}')
 
-# Function to evaluate the user's answer against the correct one
-def evaluate_answer(wyraz, angielski, i, polski, powtorz, najtrudniejsze, dzwiek, j_en):
-    # Normalize both user input and the correct answer
-    wyraz_normalized = unidecode(wyraz).strip().lower()
-    # Split the correct answer into options using '|' and normalize each option
-    angielski_options = [unidecode(option).strip().lower() for option in angielski[i].split('|')]
 
-    angielski_normalized = unidecode(angielski[i]).strip().lower()
-
-    if wyraz_normalized in angielski_options:
-        print("Correct!" if j_en else "Dobrze!")
-        powtorz[i] = max(0, powtorz[i] - 1)  # Ensure the value doesn't go below zero
-        if dzwiek: 
-            subprocess.call("cvlc --play-and-exit dzwiek/prawidlowa.wav 2> /dev/null", shell=True)
-        return False  # Indicates the answer was correct
-    else:
-        poprawione = popraw(wyraz, angielski_options)
-        print(f"{' ' * (13 + len(polski[i]))}The correct answer is: {poprawione}" if j_en else f"{' ' * (2 + len(polski[i]))}Prawidłowa odpowiedź to: {poprawione}")
-        powtorz[i] += 2
-        najtrudniejsze[i] += 1
-        if dzwiek: 
-            subprocess.call("cvlc --play-and-exit dzwiek/bledna.wav 2> /dev/null", shell=True)
-        input("[Enter]")
-        return True  # Indicates the answer was incorrect
-
-def nauka(polski, angielski, powtorz, dzwiek):
+def nauka(polski, angielski, powtorz, dzwiek, sprawdzian=False):
+    #main function which ask for translations
+    #in case 'sprawdzian'==TRUE it ask about each pair only once
     if j_en:
+        if sprawdzian:
+            print("Test")
         print("let's start!")
     else: 
+        if sprawdzian:
+            print("Sprawdzian")
         print("zaczynamy!")
     
     if dzwiek: 
@@ -181,7 +143,7 @@ def nauka(polski, angielski, powtorz, dzwiek):
         os.system('cls' if os.name == 'nt' else 'clear')
         
         # Choose the word to ask
-        if prev_wrong_index is not None:
+        if prev_wrong_index is not None and sprawdzian==False:
             i = prev_wrong_index  # Prioritize asking the previously incorrect word
             prev_wrong_index = None  # Reset after asking the wrong word again
         else:
@@ -206,15 +168,40 @@ def nauka(polski, angielski, powtorz, dzwiek):
         if wyraz == "q!":
             break
         
-        evaluate_answer(wyraz, angielski, i, polski, powtorz, najtrudniejsze, dzwiek, j_en)
+        # Normalize both user input and the correct answer
+        wyraz_normalized = unidecode(wyraz).strip().lower()
+        angielski_normalized = unidecode(angielski[i]).strip().lower()
+
+        if wyraz_normalized == angielski_normalized:
+            print("correct!" if j_en else "dobrze!")
+            powtorz[i] = max(0, powtorz[i] - 1)  # Ensure the value doesn't go below zero
+            if dzwiek: 
+                subprocess.call("cvlc --play-and-exit dzwiek/prawidlowa.wav 2> /dev/null", shell=True)
+        else:
+            poprawione = popraw(wyraz, angielski[i])
+            print(f"{' ' * (13+len(polski[i]))}the correct answer is: {poprawione}" if j_en else f"{' ' * (2+len(polski[i]))}prawidłowa odpowiedź to: {poprawione}")
+            powtorz[i] += 2
+            if sprawdzian:
+                powtorz[i]=0
+            najtrudniejsze[i] += 1
+            if dzwiek: 
+                subprocess.call("cvlc --play-and-exit dzwiek/bledna.wav 2> /dev/null", shell=True)
+            prev_wrong_index = i  # Mark the current word as wrong to ask it again next
+            input("[Enter]")
         sys.stdout.flush()  # Ensures that the message is written out
     
     if j_en:
-        print("end of the learning!")
+        if sprawdzian:
+            print("end of the test!")
+        else:
+            print("end of the learning!")
     else:
-        print("koniec nauki!")
+        if sprawdzian:
+            print("koniec sprawdzianu!")
+        else:
+            print("koniec nauki!")
     
-    wypisz_najtrudniejsze()  # Call the function to also save difficult words to a file
+    wypisz_najtrudniejsze(sprawdzian)  # Call the function to also save difficult words to a file
     
     if dzwiek: 
         subprocess.call("cvlc --play-and-exit dzwiek/koniec.wav 2> /dev/null", shell=True)
@@ -245,7 +232,11 @@ else:
 # Translation direction
 kierunek = input("Choose translation direction: Which column do you want to learn [1/2, default 2]? " if j_en else "wybierz kierunek tłumaczenia: Której kolumny chcesz się uczyć [1/2, domyślnie 2]? ")
 
+# Choosing mode: learning or test
+sprawdzian = input("Choose 1 for learning and 2 for test [1/2, default 1]? " if j_en else "wybierz 1 dla nauki i 2 dla sprawdzianu [1/2, domyślnie 1]? ")
+sprawdzian = True if sprawdzian == "2" else False
+    
 if kierunek == "1":
-    nauka(angielski, polski, powtorz, dzwiek)
+    nauka(angielski, polski, powtorz, dzwiek, sprawdzian)
 else:
-    nauka(polski, angielski, powtorz, dzwiek)
+    nauka(polski, angielski, powtorz, dzwiek, sprawdzian)
