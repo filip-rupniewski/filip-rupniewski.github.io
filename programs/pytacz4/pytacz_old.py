@@ -132,7 +132,7 @@ def find_closest_match(user_input, solution):
     alternatives = solution.split('|')  # Split alternatives by "|"
     user_normalized = normalize(user_input)
     alternatives_normalized = [normalize(alt) for alt in alternatives]
-    distances = [Levenshtein.distance(user_normalized, alt) for alt in alternatives_normalized]
+    distances = [levenshtein_distance(user_normalized, alt) for alt in alternatives_normalized]
     min_distance = min(distances)
     closest_index = distances.index(min_distance)
     return alternatives[closest_index], min_distance
@@ -185,17 +185,15 @@ def nauka(polski, angielski, powtorz, dzwiek, sprawdzian=False):
         
         # Normalize both user input and the correct answer
         wyraz_normalized = unidecode(wyraz).strip().lower()
-        angielski_wyraz = unidecode(angielski[i]).strip().lower()
+        angielski_normalized = unidecode(angielski[i]).strip().lower()
 
-        angielski_normalized, min_distance = find_closest_match(wyraz_normalized, angielski_wyraz)
-        if min_distance == 0:
+        if wyraz_normalized == angielski_normalized:
             print("correct!" if j_en else "dobrze!")
             powtorz[i] = max(0, powtorz[i] - 1)  # Ensure the value doesn't go below zero
             if dzwiek: 
                 subprocess.call("cvlc --play-and-exit dzwiek/prawidlowa.wav 2> /dev/null", shell=True)
         else:
-            poprawione = popraw(wyraz, angielski_normalized)
-            if wyraz="": poprawione=angielski_wyraz
+            poprawione = popraw(wyraz, angielski[i])
             print(f"{' ' * (13+len(polski[i]))}the correct answer is: {poprawione}" if j_en else f"{' ' * (2+len(polski[i]))}prawidłowa odpowiedź to: {poprawione}")
             powtorz[i] += 2
             if sprawdzian:
