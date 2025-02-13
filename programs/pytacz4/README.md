@@ -38,7 +38,7 @@ The graphic version is recommended, as it offers the ability to read the asked w
     Or, for the GUI version:
 
     ```bash
-    python3 pytacz_gui.py
+    python3 pytacz_gui3.0.py
     ```
 
 If you'd like to run the program inside a Python environment (e.g., myenv), you can simply execute:
