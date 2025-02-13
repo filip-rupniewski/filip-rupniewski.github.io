@@ -156,7 +156,7 @@ class CustomAskYesNo(ChoiceWindow):
 
 # Funkcja do wyboru języka
 def wybierz_jezyk():
-    jezyki = ["PL", "en"]
+    jezyki = ["pl", "en"]
     choice_window = ChoiceWindow(
         title="Wybierz język / Set the language",
         options=jezyki,
@@ -168,7 +168,7 @@ def wybierz_jezyk():
 # Funkcja do wyboru języka
 def wybierz_jezyk_głosu(j_en):
     global voice_language  # Używamy globalnej zmiennej do ustawienia języka
-    jezyki = ["de", "pl", "en"]  # Poprawiona lista kodów języków dla espeak-ng
+    jezyki = ["de", "en", "es", "fi", "fr", "hr", "hu", "it", "ja", "ko", "no", "pl", "pt", "ru", "se", "zh"]
 
     title = "Voice language settings" if j_en else "Wybieranie języka głosu"
     prompt_text = "Choose language of voice communicates:" if j_en else "Wybierz język komunikatów głosowych:"
@@ -298,6 +298,8 @@ def find_closest_match(user_input, solution):
     
 def speak(text, voice_language):
     try:
+        # Split the input text at the first pipe '|' and use the first part
+        text = text.split("|")[0]
         subprocess.run(["espeak-ng", "-v", voice_language, text], check=True)
     except subprocess.CalledProcessError as e:
         print(f"Błąd podczas syntezowania mowy: {e}")
