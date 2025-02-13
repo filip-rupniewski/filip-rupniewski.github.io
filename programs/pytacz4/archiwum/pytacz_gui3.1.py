@@ -9,7 +9,7 @@ from unidecode import unidecode
 from datetime import datetime
 import Levenshtein
 import tkinter as tk
-from tkinter import filedialog, messagebox, simpledialog, font, Tk
+from tkinter import filedialog, messagebox, simpledialog, font, Tk, ttk
 import pyttsx3 #to speak
 from gtts import gTTS #to speak with internet connection using google tts
 import tempfile
@@ -319,7 +319,7 @@ def speak(text, voice_language):
             tts = gTTS(text, lang=voice_language)
             with tempfile.NamedTemporaryFile(delete=True, suffix=".mp3") as temp_audio:
                 tts.save(temp_audio.name)
-                subprocess.run(["mpg123", temp_audio.name], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+                subprocess.run(["mpg123", temp_audio.name], stdout=subprocess.DEVNULL)
 
 
         except Exception as e:
@@ -348,8 +348,11 @@ def nauka(polski, angielski, powtorz, dzwiek, voice_language, sprawdzian=False):
         angielski_normalized, min_distance = find_closest_match(wyraz_normalized, angielski_wyraz)
         if min_distance == 0:
             false_previous=False
-            result_label.config(text="correct!" if j_en else "dobrze!", fg="green")
-            result_label2.config(text="", fg="green")
+            style.configure("Green.TLabel", foreground="green")
+            result_label.config(style="Green.TLabel", text="correct!" if j_en else "dobrze!")
+            # result_label.config(text="correct!" if j_en else "dobrze!", fg="green")
+            # result_label2.config(text="", fg="green")
+            result_label2.config(text="",)
             powtorz[i] = max(0, powtorz[i] - 1)
             if dzwiek:
                 subprocess.call("cvlc --play-and-exit dzwiek/prawidlowa.wav 2> /dev/null", shell=True)
@@ -359,8 +362,12 @@ def nauka(polski, angielski, powtorz, dzwiek, voice_language, sprawdzian=False):
             poprawione = popraw(wyraz, angielski_normalized)
             if wyraz == "":
                 poprawione = angielski[i]
-            result_label.config(text="the correct answer is:" if j_en else "prawidłowa odpowiedź to:", fg="black")
-            result_label2.config(text=f"{poprawione}" if j_en else f"{poprawione}", fg="red")
+            style.configure("Red.TLabel", foreground="red")
+            style.configure("Black.TLabel", foreground="black")
+            result_label2.config(style="Red.TLabel", text=f"{poprawione}" if j_en else f"{poprawione}")
+            # result_label.config(text="the correct answer is:" if j_en else "prawidłowa odpowiedź to:", fg="black")
+            result_label.config(style="Black.TLabel", text="the correct answer is:" if j_en else "prawidłowa odpowiedź to:")
+            # result_label2.config(text=f"{poprawione}" if j_en else f"{poprawione}", fg="red")
             powtorz[i] += 2
             if sprawdzian:
                 powtorz[i] = 0
@@ -387,8 +394,11 @@ def nauka(polski, angielski, powtorz, dzwiek, voice_language, sprawdzian=False):
             result_label.config(text="No more words to quiz!" if j_en else "Brak słów do quizu!")
             return
 
+        style.configure("Blue.TLabel", foreground="blue")
+        question_label2.config(style="Blue.TLabel", text=f"{polski[i]}" if j_en else f"{polski[i]}")
+
         question_label.config(text="Translate the word:" if j_en else "Podaj tłumaczenie wyrazu:")
-        question_label2.config(text=f"{polski[i]}" if j_en else f"{polski[i]}", fg="blue")
+#        question_label2.config(text=f"{polski[i]}" if j_en else f"{polski[i]}", fg="blue")
         remaining_label.config(
     text=f"{remaining} questions and {remaining_words} unique pairs remain.\n Write \"q!\" to abort and see result." 
          if j_en 
@@ -429,25 +439,38 @@ def nauka(polski, angielski, powtorz, dzwiek, voice_language, sprawdzian=False):
     # Tworzymy widżety w głównym oknie (choć okno jest początkowo ukryte)
     root.title("Test" if sprawdzian else "Learning" if j_en else "Sprawdzian" if sprawdzian else "Nauka")
 
-    question_label = tk.Label(root, text="", font=(font_name, font_size_remaining))
+    
+    # Styl dla przycisków
+    style = ttk.Style()
+    style.configure("TButton", font=(font_name, 14), padding=5)
+    
+    # Etykiety pytania
+    question_label = ttk.Label(root, text="", font=(font_name, font_size_remaining))
     question_label.pack(pady=1)
-    question_label2 = tk.Label(root, text="", font=(font_name, font_size_big))
+    
+    question_label2 = ttk.Label(root, text="", font=(font_name, font_size_big))
     question_label2.pack(pady=10)
-
-    entry = tk.Entry(root, font=(font_name, 20))
+    
+    # Pole tekstowe (ttk.Entry wygląda podobnie, ale działa lepiej na niektórych systemach)
+    entry = ttk.Entry(root, font=(font_name, 20))
     entry.pack(pady=10)
     entry.bind("<Return>", on_submit)
-
-    submit_button = tk.Button(root, text="Submit" if j_en else "Zatwierdź", command=on_submit)
+    
+    # Przycisk zatwierdzania
+    submit_button = ttk.Button(root, text="Submit" if j_en else "Zatwierdź", command=on_submit)
     submit_button.pack(pady=10)
-
-    result_label = tk.Label(root, text="", font=(font_name, font_size_remaining))
+    
+    # Etykiety wyników
+    result_label = ttk.Label(root, text="", font=(font_name, font_size_remaining))
     result_label.pack(pady=10)
-    result_label2 = tk.Label(root, text="", font=(font_name, font_size_big))
+    
+    result_label2 = ttk.Label(root, text="", font=(font_name, font_size_big))
     result_label2.pack(pady=10)
-
-    remaining_label = tk.Label(root, text="", font=(font_name, font_size_list))
+    
+    # Etykieta informująca o pozostałych pytaniach
+    remaining_label = ttk.Label(root, text="", font=(font_name, font_size_list))
     remaining_label.pack(pady=10)
+
 
     false_previous = False
     i = losuj_numer(powtorz)
