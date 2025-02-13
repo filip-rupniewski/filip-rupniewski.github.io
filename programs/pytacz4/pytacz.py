@@ -43,15 +43,6 @@ def zaimportuj(nazwa_pliku):
     polski, angielski = map(list, zip(*zaimportowana_lista))
     return polski, angielski
 
-def countdown(t):
-    print("drukowanie")
-    while t:
-        mins, secs = divmod(t, 60)
-        timeformat = '{:02d}:{:02d}'.format(mins, secs)
-        print(timeformat, end='\r')
-        time.sleep(1)
-        t -= 1
-    print('wydrukowano!\n')
 
 def losuj_numer(tablica_powtorzen):
     # Losuje słowo do sprawdzenia
@@ -195,7 +186,7 @@ def nauka(polski, angielski, powtorz, dzwiek, sprawdzian=False):
                 subprocess.call("cvlc --play-and-exit dzwiek/prawidlowa.wav 2> /dev/null", shell=True)
         else:
             poprawione = popraw(wyraz, angielski_normalized)
-            if wyraz="": poprawione=angielski_wyraz
+            if wyraz=="": poprawione=angielski_wyraz
             print(f"{' ' * (13+len(polski[i]))}the correct answer is: {poprawione}" if j_en else f"{' ' * (2+len(polski[i]))}prawidłowa odpowiedź to: {poprawione}")
             powtorz[i] += 2
             if sprawdzian:
@@ -222,6 +213,7 @@ def nauka(polski, angielski, powtorz, dzwiek, sprawdzian=False):
     
     if dzwiek: 
         subprocess.call("cvlc --play-and-exit dzwiek/koniec.wav 2> /dev/null", shell=True)
+
 
 
 # Main logic
