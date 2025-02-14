@@ -31,6 +31,7 @@ font_size_result=14
 font_size_label=14
 font_size_list=12
 USE_GOOGLE_TTS = True  # Zmień na True, aby używać Google TTS, na False gdy brak internetu
+main_folder=""
 
 # Tymczasowo inicjalizuj tkinter, aby sprawdzić dostępność czcionki
 temp_root = Tk()
@@ -239,6 +240,7 @@ def popraw(zly, dobry):
     return wynik
 
 def wypisz_najtrudniejsze(sprawdzian=False, dzwiek=False):
+    global main_folder
     if sum(najtrudniejsze) == 0:
         messagebox.showinfo("Info", "Well done!" if j_en else "Dobra robota!")
         return
@@ -263,9 +265,9 @@ def wypisz_najtrudniejsze(sprawdzian=False, dzwiek=False):
 
     # Save to CSV (unchanged)
     date_str = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
-    filename = f'najtrudniejsze/{nazwa_pliku}_najtrudniejsze_{date_str}.csv'
+    filename = f'{main_folder}/najtrudniejsze/{nazwa_pliku}_najtrudniejsze_{date_str}.csv'
     if sprawdzian:
-        filename = f'najtrudniejsze/{nazwa_pliku}_sprawdzian_najtrudniejsze_{date_str}.csv'
+        filename = f'{main_folder}/najtrudniejsze/{nazwa_pliku}_sprawdzian_najtrudniejsze_{date_str}.csv'
     with open(filename, 'w', newline='', encoding='utf-8') as f:
         writer = csv.writer(f, delimiter=";")
         writer.writerow(["1 język", "2 język", "Liczba powtórzeń"])
@@ -463,9 +465,14 @@ def nauka(polski, angielski, powtorz, dzwiek, voice_language, sprawdzian=False):
 
     
 def main():
-    global j_en, polski, angielski, powtorz, najtrudniejsze, dzwiek, voice_language
+    global j_en, polski, angielski, powtorz, najtrudniejsze, dzwiek, voice_language, main_folder
 
-    do_nauki_folder = "do_nauki"
+    
+    # Set main working directories
+    main_folder = os.path.dirname(os.path.abspath(__file__))  # Get the script's directory if running as a script
+    os.chdir(main_folder)
+    # Define relative paths
+    do_nauki_folder = os.path.join(main_folder, "do_nauki")
     pliki_do_nauki = lista_plikow(do_nauki_folder)
     
     j_en = wybierz_jezyk()

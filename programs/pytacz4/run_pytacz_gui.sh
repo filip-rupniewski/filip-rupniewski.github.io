@@ -1,4 +1,5 @@
 #!/bin/bash
 source /home/filip/myenv/bin/activate
-python3 pytacz_gui3.0.py  
-deactivate  
+SCRIPT_DIR="$(dirname "$(realpath "$0")")"
+python3 "$SCRIPT_DIR/pytacz_gui3.0.py"
+deactivate

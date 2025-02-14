@@ -10,7 +10,7 @@ At the end of the session, the word pairs you struggled with the most are saved 
 
 ## Demo
 
-You can watch a demonstration of how the program works. The video files are located in the `demo` folder.
+You can watch a demonstration of how the program works. The video files are located in the `demo` folder. You can watch the english demo also [here](https://mega.nz/file/P51BkbKK#QeXFqUP9Gp2iOnp35FOTg4F8sIcvKGZINshEqhpfHic).
 
 
 ## Vocabulary
@@ -49,7 +49,7 @@ The graphic version is recommended, as it offers the ability to read the asked w
 If you'd like to run the program inside a Python environment (e.g., myenv), you can simply execute:
 
     ```bash
-    ./run_pytacz_gui.sh
+    bash run_pytacz_gui.sh
     ```
     
 # Pytacz 3.0 (PL)
@@ -64,7 +64,10 @@ Pary słów, z którymi miałeś największe trudności, zostaną zapisane w fol
 
 ## Demo
 
-Możesz obejrzeć film demonstracyjny, jak działa program. Pliki wideo znajdują się w folderze `demo`.
+Filmy demonstracyjne przedstawiające działanie programu znajdują się w folderze `demo`.  
+Możesz także obejrzeć polskie demo w przeglądarce [tutaj](https://mega.nz/file/C90wBSTa#skcDnw5jHAjXC4mK3yImJaZngIzHJ01-vX7L3ADx78I).
+
+Zmiany:
 
 ## Słownictwo
 
