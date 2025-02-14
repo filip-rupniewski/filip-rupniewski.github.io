@@ -46,11 +46,12 @@ The graphic version is recommended, as it offers the ability to read the asked w
     python3 pytacz_gui3.0.py
     ```
 
-If you'd like to run the program inside a Python environment (e.g., myenv), you can simply execute:
+If you'd like to run the program inside a Python environment, in my case it is myenv, you can simply execute:
 
     ```bash
     bash run_pytacz_gui.sh
     ```
+You can always change the corresponding name in run_pytacz_gui.sh to agree with your environment name.
     
 # Pytacz 3.0 (PL)
 
@@ -104,9 +105,9 @@ Zaleca się korzystanie z wersji graficznej, ponieważ oferuje ona możliwość 
     python3 pytacz_gui3.0.py
     ```
 
-Jeśli chcesz uruchomić program w środowisku Python (np. `myenv`), po prostu wykonaj:
+Jeśli chcesz uruchomić program w oddzielnym środowisku Python, w tym przypadku `myenv`, po prostu wykonaj:
 
     ```bash
-    ./run_pytacz_gui.sh
+    bash run_pytacz_gui.sh
     ```
-
+lub zmień `myenv` na odpowiednią nazwę w `run_pytacz_gui.sh`. 
