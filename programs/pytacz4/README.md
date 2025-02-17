@@ -34,7 +34,9 @@ Example screenshots of the graphical interface:
 
 ## Vocabulary
 
-Each file in the `do_nauki` folder contains two columns of words. By default, these are Polish words and their English translations (separated by semicolons). You can modify or add files as needed. Comments can be added by starting a line with `#`.
+Here’s the corrected version:  
+
+Each file in the `do_nauki` folder contains two columns of words. By default, these are Polish words and their English translations (separated by semicolons). Different variants of a word can be entered by separating them with a pipe `|`. You can modify or add files as needed. Comments can be added by starting a line with `#`.
 
 ## Required Packages
 
@@ -155,7 +157,7 @@ Przykładowe zrzuty ekranu interfejsu graficznego:
 
 ## Słownictwo  
 
-Każdy plik w folderze `do_nauki` zawiera dwie kolumny słów. Domyślnie są to polskie słowa oraz ich angielskie tłumaczenia (oddzielone średnikami). Możesz dowolnie edytować lub dodawać nowe pliki. Możesz również dodawać komentarze, rozpoczynając linie od `#`.  
+Każdy plik w folderze `do_nauki` zawiera dwie kolumny słów. Domyślnie są to polskie słowa i ich angielskie tłumaczenia (oddzielone średnikami). Różne warianty słowa można wprowadzić, oddzielając je pionową kreską `|`. Możesz modyfikować lub dodawać pliki według potrzeb. Komentarze można dodawać, rozpoczynając linię od `#`.
 
 ---
 
