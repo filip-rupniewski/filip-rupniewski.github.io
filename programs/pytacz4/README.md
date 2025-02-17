@@ -11,9 +11,7 @@ You can see both the total number of questions left and the number of unique wor
 
 At the end of the session, the word pairs you struggled with the most are saved in the `"najtrudniejsze"` folder.
 
-## Demo
-
-You can watch a demonstration of how the program works. The video files are located in the `demo` folder. You can also watch the English demo [here](https://mega.nz/file/P51BkbKK#QeXFqUP9Gp2iOnp35FOTg4F8sIcvKGZINshEqhpfHic).
+---
 
 ## GUI
 
@@ -21,6 +19,10 @@ The program is available in both text-based and graphical versions.
 
 - In **text mode**, the current occurrence count for each question is displayed in a table at the top.  
 - The **graphical version** is recommended, as it provides the option to read words aloud. 
+
+## Demonstration video
+
+You can watch a demonstration of how the program works. The video files are located in the `demo` folder. You can also watch the English demo [here](https://mega.nz/file/P51BkbKK#QeXFqUP9Gp2iOnp35FOTg4F8sIcvKGZINshEqhpfHic).
 
 ### Screenshots
 
@@ -32,11 +34,15 @@ Example screenshots of the graphical interface:
 **Polish version:**  
 ![Polish GUI](demo/window_pl.png)
 
+---
+
 ## Vocabulary
 
 Here’s the corrected version:  
 
 Each file in the `do_nauki` folder contains two columns of words. By default, these are Polish words and their English translations (separated by semicolons). Different variants of a word can be entered by separating them with a pipe `|`. You can modify or add files as needed. Comments can be added by starting a line with `#`.
+
+---
 
 ## Required Packages
 
@@ -47,6 +53,8 @@ Each file in the `do_nauki` folder contains two columns of words. By default, th
   - `pygame`  
   - `pyttsx3` (for text-to-speech conversion; required only for the GUI version, with no internet connection needed)  
   - `gTTS` (for text-to-speech conversion; required only for the GUI version)  
+
+---
 
 ## Installation
 
@@ -80,6 +88,8 @@ Each file in the `do_nauki` folder contains two columns of words. By default, th
    brew install python3
    pip3 install unidecode Levenshtein pygame pyttsx3 gTTS
    ```
+
+---
 
 ## Running the Program
 
@@ -115,6 +125,8 @@ bash run_pytacz_gui.sh
 
 You can always modify `run_pytacz_gui.sh` to match your environment name.
 
+---
+
 # Pytacz 3.0 (PL)  
 
 **Pytacz 3.0** pomaga w nauce słownictwa.  
@@ -128,11 +140,6 @@ Możesz zobaczyć zarówno całkowitą liczbę pytań, które pozostały, jak i 
 
 Na koniec sesji pary słów, które sprawiły Ci największą trudność, zostaną zapisane w folderze `"najtrudniejsze"`.  
 
----
-
-## Demo  
-
-Możesz obejrzeć demonstrację działania programu. Pliki wideo znajdują się w folderze `demo`. Możesz również obejrzeć polskie demo [tutaj](https://mega.nz/file/C90wBSTa#skcDnw5jHAjXC4mK3yImJaZngIzHJ01-vX7L3ADx78I).  
 
 ---
 
@@ -142,6 +149,10 @@ Program jest dostępny w wersji tekstowej oraz graficznej.
 
 - W **trybie tekstowym** aktualna liczba wystąpień dla każdego pytania jest wyświetlana w tabeli na górze ekranu.  
 - **Wersja graficzna** jest zalecana, ponieważ umożliwia odczytywanie słów na głos. 
+
+## Nagranie demonstracyjne  
+
+Możesz obejrzeć demonstrację działania programu. Pliki wideo znajdują się w folderze `demo`. Możesz również obejrzeć polskie demo [tutaj](https://mega.nz/file/C90wBSTa#skcDnw5jHAjXC4mK3yImJaZngIzHJ01-vX7L3ADx78I).  
 
 ### Zrzuty ekranu  
 
