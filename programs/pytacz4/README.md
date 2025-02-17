@@ -55,7 +55,7 @@ pip install unidecode Levenshtein pygame pyttsx3 gTTS
 2. Navigate to the Pytacz folder. (on windows type `cd "Downloads\pytacz4"` if you downloaded all the files to `Downlads` folder)
 2. Run one of the following commands, depending on desired mode:
 
-    Fpr text mode (linux, windows correspondingly):
+    For text mode (linux, windows correspondingly):
     
     ```bash
     python3 pytacz.py
