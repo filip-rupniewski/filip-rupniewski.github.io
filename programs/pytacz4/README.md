@@ -25,28 +25,52 @@ The graphic version is recommended, as it offers the ability to read the asked w
 ## Required Packages
 
 - VLC (for sound, if desired)
+- ffmpeg (for sound, if desired in windows) 
 - Python 3
 - Python libraries (installable via pip):
     - `unidecode`
-    - `python-Levenshtein`
-    - `pyttsx3` (for text-to-speech conversion, required only for the GUI version)
+    - `Levenshtein`
+    - `pygame`
+    - `pyttsx3` (for text-to-speech conversion, required only for the GUI version and without internet access)
+    - `gTTS` (for text-to-speech conversion, required only for the GUI version)
+
+for windows: 
+You can install Python from windows store. Then ppen Command Prompt (`Win + R → type cmd → Enter`) and write: 
+    ```Command Prompt
+    pip install unidecode Levenshtein pygame pyttsx3 gTTS
+    ```
+for linux:
+    ```bash
+    sudo apt install -y python3
+    pip install unidecode Levenshtein pygame pyttsx3 gTTS
+    ```
+
 
 ## To Run the Program
 
-1. In the terminal, navigate to the Pytacz folder.
+1. Open the terminal or Command prompt in case of windows. To do it in windows type: `Win + R → type cmd → Enter`).
+2. Navigate to the Pytacz folder. (on windows type `cd "Downloads\pytacz4"` if you downloaded all the files to `Downlads` folder)
 2. Run one of the following commands, depending on your desired mode:
 
     ```bash
     python3 pytacz.py
     ```
 
+    ```Command prompt (windows)
+    python pytacz.py
+    ```
+
     Or, for the GUI version:
 
     ```bash
-    python3 pytacz_gui3.0.py
+    python3 pytacz_gui3.4.py
     ```
 
-If you'd like to run the program inside a Python environment, in my case it is myenv, you can simply execute:
+    ```Command prompt (windows)
+    python pytacz_gui3.4.py
+    ```
+
+If you'd like to run the program inside a Python environment on Linux, in my case it is myenv, you can simply execute:
 
     ```bash
     bash run_pytacz_gui.sh
@@ -86,7 +110,22 @@ Zaleca się korzystanie z wersji graficznej, ponieważ oferuje ona możliwość 
 - Biblioteki Pythona (do zainstalowania za pomocą pip):
     - `unidecode`
     - `python-Levenshtein`
-    - `pyttsx3` (do konwersji tekstu na mowę, wymagane tylko dla wersji GUI)
+    - `pygame`
+    - `pyttsx3` (do konwersji tekstu na mowę, wymagane tylko dla wersji GUI i tylko w przypadku braku dostępu do internetu)
+    - `gTTS` (do konwersji tekstu na mowę, wymagane tylko dla wersji GUI)
+
+
+Windows: 
+Można zainstalować Pythona z windows store. Następnie otwórz Wiersz poleceń (`Win + R → type cmd → Enter`) i wpisz: 
+    ```Wiersz poleceń
+    pip install unidecode Levenshtein pygame pyttsx3 gTTS
+    ```
+Linux:
+    ```bash
+    sudo apt install -y python3
+    pip install unidecode Levenshtein pygame pyttsx3 gTTS
+    ```
+
 
 ## Uruchomienie programu
 
@@ -99,15 +138,24 @@ Zaleca się korzystanie z wersji graficznej, ponieważ oferuje ona możliwość 
     python3 pytacz.py
     ```
 
+    ```Command prompt (windows)
+    python pytacz.py
+    ```
+
     Dla wersji GUI:
 
     ```bash
-    python3 pytacz_gui3.0.py
+    python3 pytacz_gui3.4.py
     ```
-
-Jeśli chcesz uruchomić program w oddzielnym środowisku Python, w tym przypadku `myenv`, po prostu wykonaj:
+    
+    ```Command prompt (windows)
+    python pytacz_gui3.4.py
+    ```
+    
+Jeśli chcesz uruchomić program w oddzielnym środowisku Python pod linuxem, w tym przypadku `myenv`, po prostu wykonaj:
 
     ```bash
     bash run_pytacz_gui.sh
     ```
+    
 lub zmień `myenv` na odpowiednią nazwę w `run_pytacz_gui.sh`. 

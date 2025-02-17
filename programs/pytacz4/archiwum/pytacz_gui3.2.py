@@ -295,13 +295,22 @@ def wypisz_najtrudniejsze(sprawdzian=False, dzwiek=False):
     
     if dzwiek:
         if system_name == "Windows":
-            # On Windows, adjust the command if necessary. 
-            # Ensure that VLC is in your PATH or use its full path.
-            subprocess.call(f'vlc --play-and-exit "{sound_file}"', shell=True)
+            # Ensure the correct path to VLC
+            vlc_path = r"C:\Program Files\VideoLAN\VLC\vlc.exe"
+            # Configure subprocess to hide the VLC window
+            startupinfo = subprocess.STARTUPINFO()
+            startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
+        
+            # Run VLC with the specified options
+            subprocess.run(
+                [vlc_path, '--play-and-exit', '--qt-start-minimized', sound_file],  
+                stdout=subprocess.DEVNULL,
+                stderr=subprocess.DEVNULL,
+                startupinfo=startupinfo
+            )
         else:
             # For macOS (or Linux) using cvlc with output redirection.
             subprocess.call(f'cvlc --play-and-exit "{sound_file}" 2> /dev/null', shell=True)
-
 
     result_window.mainloop()
 
@@ -320,7 +329,6 @@ def find_closest_match(user_input, solution):
     return alternatives[closest_index], min_distance
 
     
-
 def speak(text, voice_language):
     global USE_GOOGLE_TTS, system_name
     # W przypadku "dzięki|dziękuję|dzięks" ignorujemy wszystko po pierwszym "|"
@@ -329,8 +337,12 @@ def speak(text, voice_language):
     if USE_GOOGLE_TTS:
         try:
             tts = gTTS(text, lang=voice_language)
-            with tempfile.NamedTemporaryFile(delete=True, suffix=".mp3") as temp_audio:
+            # Create a temporary audio file with delete=False
+            with tempfile.NamedTemporaryFile(delete=False, suffix=".mp3") as temp_audio:
                 tts.save(temp_audio.name)
+                print(f"Saving speech to: {temp_audio.name}")
+                temp_audio.close()  # Close the file handle before using it
+                
                 if system_name == "Windows":
                     subprocess.run(
                         ['ffplay', '-nodisp', '-autoexit', temp_audio.name],
@@ -343,6 +355,8 @@ def speak(text, voice_language):
                         stdout=subprocess.DEVNULL,
                         stderr=subprocess.DEVNULL
                     )
+                os.remove(temp_audio.name)  # Remove the file after use
+                print(f"File {temp_audio.name} deleted successfully.")
         except Exception as e:
             print(f"Błąd podczas syntezowania mowy (Google TTS): {e}")
     else:
@@ -350,7 +364,6 @@ def speak(text, voice_language):
             subprocess.run(["espeak-ng", "-v", voice_language, text], check=True)
         except subprocess.CalledProcessError as e:
             print(f"Błąd podczas syntezowania mowy (espeak-ng): {e}")
-
 
 def nauka(polski, angielski, powtorz, dzwiek, voice_language, sprawdzian=False):
     def on_submit(event=None):
@@ -522,6 +535,7 @@ def main():
     global j_en, polski, angielski, powtorz, najtrudniejsze, dzwiek, voice_language, main_folder, system_name
     # identify operating system
     system_name=platform.system()
+    tempfile.tempdir = os.path.join(main_folder, "temp")
 
     
     # Set main working directories

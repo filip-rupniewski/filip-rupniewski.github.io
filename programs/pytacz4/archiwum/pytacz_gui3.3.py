@@ -14,6 +14,13 @@ import pyttsx3 #to speak
 from gtts import gTTS #to speak with internet connection using google tts
 import tempfile
 import platform
+from playsound import playsound
+import gi
+#gi.require_version("Gst", "1.0")
+from gi.repository import Gst
+# Initialize GStreamer
+Gst.init(None)
+
 #import threading
 
 # Global variables
@@ -243,17 +250,20 @@ def popraw(zly, dobry):
 
 def wypisz_najtrudniejsze(sprawdzian=False, dzwiek=False):
     global main_folder, system_name
-    sound_file = os.path.join(main_folder, "dzwiek", "koniec.wav")
+    # sound_file = os.path.join(main_folder, "dzwiek", "koniec.wav")
 
     if sum(najtrudniejsze) == 0:
         if dzwiek:
-            if system_name == "Windows":
-                # On Windows, adjust the command if necessary. 
-                # Ensure that VLC is in your PATH or use its full path.
-                subprocess.call(f'vlc --play-and-exit "{sound_file}"', shell=True)
-            else:
-                # For macOS (or Linux) using cvlc with output redirection.
-                subprocess.call(f'cvlc --play-and-exit "{sound_file}" 2> /dev/null', shell=True)
+            sound_file = os.path.join(main_folder, "dzwiek", "koniec.wav")
+            playsound(sound_file)
+        # if dzwiek:
+        #     if system_name == "Windows":
+        #         # On Windows, adjust the command if necessary. 
+        #         # Ensure that VLC is in your PATH or use its full path.
+        #         subprocess.call(f'vlc --play-and-exit "{sound_file}"', shell=True)
+        #     else:
+        #         # For macOS (or Linux) using cvlc with output redirection.
+        #         subprocess.call(f'cvlc --play-and-exit "{sound_file}" 2> /dev/null', shell=True)
         messagebox.showinfo("Info", "Well done!" if j_en else "Dobra robota!")
         return
 
@@ -294,14 +304,27 @@ def wypisz_najtrudniejsze(sprawdzian=False, dzwiek=False):
     close_button.pack(pady=10)
     
     if dzwiek:
-        if system_name == "Windows":
-            # On Windows, adjust the command if necessary. 
-            # Ensure that VLC is in your PATH or use its full path.
-            subprocess.call(f'vlc --play-and-exit "{sound_file}"', shell=True)
-        else:
-            # For macOS (or Linux) using cvlc with output redirection.
-            subprocess.call(f'cvlc --play-and-exit "{sound_file}" 2> /dev/null', shell=True)
-
+        sound_file = os.path.join(main_folder, "dzwiek", "koniec.wav")
+        playsound(sound_file)
+        
+    # if dzwiek:
+    #     if system_name == "Windows":
+    #         # Ensure the correct path to VLC
+    #         vlc_path = r"C:\Program Files\VideoLAN\VLC\vlc.exe"
+    #         # Configure subprocess to hide the VLC window
+    #         startupinfo = subprocess.STARTUPINFO()
+    #         startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
+        
+    #         # Run VLC with the specified options
+    #         subprocess.run(
+    #             [vlc_path, '--play-and-exit', '--qt-start-minimized', sound_file],  
+    #             stdout=subprocess.DEVNULL,
+    #             stderr=subprocess.DEVNULL,
+    #             startupinfo=startupinfo
+    #         )
+    #     else:
+    #         # For macOS (or Linux) using cvlc with output redirection.
+    #         subprocess.call(f'cvlc --play-and-exit "{sound_file}" 2> /dev/null', shell=True)
 
     result_window.mainloop()
 
@@ -320,7 +343,6 @@ def find_closest_match(user_input, solution):
     return alternatives[closest_index], min_distance
 
     
-
 def speak(text, voice_language):
     global USE_GOOGLE_TTS, system_name
     # W przypadku "dzięki|dziękuję|dzięks" ignorujemy wszystko po pierwszym "|"
@@ -329,20 +351,40 @@ def speak(text, voice_language):
     if USE_GOOGLE_TTS:
         try:
             tts = gTTS(text, lang=voice_language)
-            with tempfile.NamedTemporaryFile(delete=True, suffix=".mp3") as temp_audio:
+            # Create a temporary audio file with delete=False
+            with tempfile.NamedTemporaryFile(delete=False, suffix=".mp3") as temp_audio:
                 tts.save(temp_audio.name)
-                if system_name == "Windows":
-                    subprocess.run(
-                        ['ffplay', '-nodisp', '-autoexit', temp_audio.name],
-                        stdout=subprocess.DEVNULL,
-                        stderr=subprocess.DEVNULL
-                    )
-                else:
-                    subprocess.run(
-                        ["mpg123", temp_audio.name],
-                        stdout=subprocess.DEVNULL,
-                        stderr=subprocess.DEVNULL
-                    )
+                # print(f"Saving speech to: {temp_audio.name}")
+                temp_audio.close()  # Close the file handle before using it
+                
+                playsound(temp_audio.name)
+#                 if system_name == "Windows":
+#                     subprocess.run(
+#                         ['ffplay', '-nodisp', '-autoexit', temp_audio.name],
+#                         stdout=subprocess.DEVNULL,
+#                         stderr=subprocess.DEVNULL
+#                     )
+#                     # Play the audio file
+# #                    playsound(temp_audio.name)
+#                 else:                    
+#                     # # Use GStreamer for playback
+#                     # pipeline = Gst.parse_launch(f"playbin uri=file://{temp_audio.name}")
+#                     # pipeline.set_state(Gst.State.PLAYING)
+#                     # # Wait for playback to finish
+#                     # bus = pipeline.get_bus()
+#                     # msg = bus.timed_pop_filtered(Gst.CLOCK_TIME_NONE, Gst.MessageType.EOS | Gst.MessageType.ERROR)
+#                     # # Cleanup
+#                     # pipeline.set_state(Gst.State.NULL)
+
+#                     # Play the audio file
+#                     playsound(temp_audio.name)
+#                     # subprocess.run(
+#                     #     ["mpg123", temp_audio.name],
+#                     #     stdout=subprocess.DEVNULL,
+#                     #     stderr=subprocess.DEVNULL
+#                     # )
+#                 os.remove(temp_audio.name)  # Remove the file after use
+#                 # print(f"File {temp_audio.name} deleted successfully.")
         except Exception as e:
             print(f"Błąd podczas syntezowania mowy (Google TTS): {e}")
     else:
@@ -350,7 +392,6 @@ def speak(text, voice_language):
             subprocess.run(["espeak-ng", "-v", voice_language, text], check=True)
         except subprocess.CalledProcessError as e:
             print(f"Błąd podczas syntezowania mowy (espeak-ng): {e}")
-
 
 def nauka(polski, angielski, powtorz, dzwiek, voice_language, sprawdzian=False):
     def on_submit(event=None):
@@ -374,17 +415,20 @@ def nauka(polski, angielski, powtorz, dzwiek, voice_language, sprawdzian=False):
             powtorz[i] = max(0, powtorz[i] - 1)
             if dzwiek:
                 sound_file = os.path.join(main_folder, "dzwiek", "prawidlowa.wav")
-                if platform.system() == "Windows":
-                    subprocess.call(
-                        ['ffplay', '-nodisp', '-autoexit', sound_file],
-                        stdout=subprocess.DEVNULL,
-                        stderr=subprocess.DEVNULL
-                    )
-                else:
-                    subprocess.call(
-                        f'cvlc --play-and-exit "{sound_file}" 2> /dev/null',
-                        shell=True
-                    )
+                playsound(sound_file)
+            # if dzwiek:
+            #     sound_file = os.path.join(main_folder, "dzwiek", "prawidlowa.wav")
+            #     if platform.system() == "Windows":
+            #         subprocess.call(
+            #             ['ffplay', '-nodisp', '-autoexit', sound_file],
+            #             stdout=subprocess.DEVNULL,
+            #             stderr=subprocess.DEVNULL
+            #         )
+            #     else:
+            #         subprocess.call(
+            #             f'cvlc --play-and-exit "{sound_file}" 2> /dev/null',
+            #             shell=True
+            #         )
         else:
             if not sprawdzian:
                 false_previous=True
@@ -399,17 +443,20 @@ def nauka(polski, angielski, powtorz, dzwiek, voice_language, sprawdzian=False):
             najtrudniejsze[i] += 1
             if dzwiek:
                 sound_file = os.path.join(main_folder, "dzwiek", "bledna.wav")
-                if platform.system() == "Windows":
-                    subprocess.call(
-                        ['ffplay', '-nodisp', '-autoexit', sound_file],
-                        stdout=subprocess.DEVNULL,
-                        stderr=subprocess.DEVNULL
-                    )
-                else:
-                    subprocess.call(
-                        f'cvlc --play-and-exit "{sound_file}" 2> /dev/null',
-                        shell=True
-                    )
+                playsound(sound_file)
+            # if dzwiek:
+            #     sound_file = os.path.join(main_folder, "dzwiek", "bledna.wav")
+            #     if platform.system() == "Windows":
+            #         subprocess.call(
+            #             ['ffplay', '-nodisp', '-autoexit', sound_file],
+            #             stdout=subprocess.DEVNULL,
+            #             stderr=subprocess.DEVNULL
+            #         )
+            #     else:
+            #         subprocess.call(
+            #             f'cvlc --play-and-exit "{sound_file}" 2> /dev/null',
+            #             shell=True
+            #         )
 
         remaining = sum(powtorz)
         remaining_words = sum(1 for j in powtorz if j != 0)
@@ -430,6 +477,12 @@ def nauka(polski, angielski, powtorz, dzwiek, voice_language, sprawdzian=False):
             result_label.config(text="No more words to quiz!" if j_en else "Brak słów do quizu!")
             return
 
+        if dzwiek:
+            # Synchronizowanie dźwięku z aktualizacją GUI
+            root.after(1, lambda: speak(polski[i], voice_language))  # Delikatne opóźnienie, aby dać czas na zaktualizowanie GUI
+        # if dzwiek:
+        #     speak(polski[i],voice_language)
+
         question_label.config(text="Translate the word:" if j_en else "Podaj tłumaczenie wyrazu:")
         question_label2.config(text=f"{polski[i]}" if j_en else f"{polski[i]}", fg="blue")
         remaining_label.config(
@@ -439,12 +492,6 @@ def nauka(polski, angielski, powtorz, dzwiek, voice_language, sprawdzian=False):
 )       
         entry.focus_set()
         
-        if dzwiek:
-            # Synchronizowanie dźwięku z aktualizacją GUI
-            root.after(100, lambda: speak(polski[i], voice_language))  # Delikatne opóźnienie, aby dać czas na zaktualizowanie GUI
-        # if dzwiek:
-        #     speak(polski[i],voice_language)
-
 
     # Inicjalizujemy GŁÓWNE okno (jedno!)
     root = tk.Tk()
@@ -459,20 +506,23 @@ def nauka(polski, angielski, powtorz, dzwiek, voice_language, sprawdzian=False):
     
     
     # Funkcja do zamknięcia okna startowego i uruchomienia głównego okna z pytaniem
-    def start_main_app():    
+    def start_main_app():   
         if dzwiek:
             sound_file = os.path.join(main_folder, "dzwiek", "poczatek.wav")
-            if platform.system() == "Windows":
-                subprocess.call(
-                    ['ffplay', '-nodisp', '-autoexit', sound_file],
-                    stdout=subprocess.DEVNULL,
-                    stderr=subprocess.DEVNULL
-                )
-            else:
-                subprocess.call(
-                    f'cvlc --play-and-exit "{sound_file}" 2> /dev/null',
-                    shell=True
-                )  # Odtwarzamy dźwięk
+            playsound(sound_file)
+        # if dzwiek:
+        #     sound_file = os.path.join(main_folder, "dzwiek", "poczatek.wav")
+        #     if platform.system() == "Windows":
+        #         subprocess.call(
+        #             ['ffplay', '-nodisp', '-autoexit', sound_file],
+        #             stdout=subprocess.DEVNULL,
+        #             stderr=subprocess.DEVNULL
+        #         )
+        #     else:
+        #         subprocess.call(
+        #             f'cvlc --play-and-exit "{sound_file}" 2> /dev/null',
+        #             shell=True
+        #         )  # Odtwarzamy dźwięk
     
         start_window.destroy()  # Zamykamy okno startowe
         root.deiconify()  # Pokazujemy główne okno po muzyce
@@ -522,6 +572,7 @@ def main():
     global j_en, polski, angielski, powtorz, najtrudniejsze, dzwiek, voice_language, main_folder, system_name
     # identify operating system
     system_name=platform.system()
+    tempfile.tempdir = os.path.join(main_folder, "temp")
 
     
     # Set main working directories

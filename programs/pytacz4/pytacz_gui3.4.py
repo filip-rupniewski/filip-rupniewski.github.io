@@ -10,10 +10,13 @@ from datetime import datetime
 import Levenshtein
 import tkinter as tk
 from tkinter import filedialog, messagebox, simpledialog, font, Tk
-import pyttsx3 #to speak
+import pyttsx3 #to speak without internet connection
 from gtts import gTTS #to speak with internet connection using google tts
 import tempfile
 import platform
+os.environ["PYGAME_HIDE_SUPPORT_PROMPT"] = "hide"
+import pygame
+
 #import threading
 
 # Global variables
@@ -91,9 +94,9 @@ class ChoiceWindow:
 
 
         # Powiązanie klawiszy z funkcjami
-        self.root.bind("<Up>", self.on_key)
-        self.root.bind("<Down>", self.on_key)
-        self.root.bind("<Return>", self.on_key)
+        self.listbox.bind("<Up>", self.on_key)
+        self.listbox.bind("<Down>", self.on_key)
+        self.listbox.bind("<Return>", self.on_key)
 
         # Domyślne zaznaczenie pierwszego elementu
         self.listbox.selection_set(0)
@@ -101,8 +104,15 @@ class ChoiceWindow:
 
         # Czcionka do przycisku
         button_font = (font_name, font_size_list)
-        self.select_button = tk.Button(self.root, text="OK", command=self.on_select, font=button_font)
-        self.select_button.pack(pady=10)
+        self.select_button = tk.Button(self.root, text="OK", command=self.on_select, font=button_font, takefocus=False)
+        self.select_button.pack(pady=10, padx=10)
+
+	#focus on a listbox
+        #self.listbox.focus_set()
+        self.root.after(100, lambda: self.listbox.focus_set())
+
+        # Ensure the Listbox gets focus after the window is drawn
+        self.root.after_idle(self.listbox.focus_set)
 
     def on_select(self, event=None):
         """Obsługa wyboru opcji."""
@@ -243,17 +253,22 @@ def popraw(zly, dobry):
 
 def wypisz_najtrudniejsze(sprawdzian=False, dzwiek=False):
     global main_folder, system_name
-    sound_file = os.path.join(main_folder, "dzwiek", "koniec.wav")
+    #sound_file = os.path.join(main_folder, "dzwiek", "koniec.wav")
 
     if sum(najtrudniejsze) == 0:
         if dzwiek:
-            if system_name == "Windows":
-                # On Windows, adjust the command if necessary. 
-                # Ensure that VLC is in your PATH or use its full path.
-                subprocess.call(f'vlc --play-and-exit "{sound_file}"', shell=True)
-            else:
-                # For macOS (or Linux) using cvlc with output redirection.
-                subprocess.call(f'cvlc --play-and-exit "{sound_file}" 2> /dev/null', shell=True)
+            sound_file = os.path.join(main_folder, "dzwiek", "koniec.wav")
+            #playsound(sound_file)
+            pygame.mixer.music.load(sound_file)
+            pygame.mixer.music.play()
+        # if dzwiek:
+        #     if system_name == "Windows":
+        #         # On Windows, adjust the command if necessary. 
+        #         # Ensure that VLC is in your PATH or use its full path.
+        #         subprocess.call(f'vlc --play-and-exit "{sound_file}"', shell=True)
+        #     else:
+        #         # For macOS (or Linux) using cvlc with output redirection.
+        #         subprocess.call(f'cvlc --play-and-exit "{sound_file}" 2> /dev/null', shell=True)
         messagebox.showinfo("Info", "Well done!" if j_en else "Dobra robota!")
         return
 
@@ -291,17 +306,32 @@ def wypisz_najtrudniejsze(sprawdzian=False, dzwiek=False):
 
     # Add a close button
     close_button = tk.Button(result_window, text="Close" if j_en else "Zamknij", command=result_window.destroy)
-    close_button.pack(pady=10)
+    close_button.pack(pady=10, padx=10)
     
     if dzwiek:
-        if system_name == "Windows":
-            # On Windows, adjust the command if necessary. 
-            # Ensure that VLC is in your PATH or use its full path.
-            subprocess.call(f'vlc --play-and-exit "{sound_file}"', shell=True)
-        else:
-            # For macOS (or Linux) using cvlc with output redirection.
-            subprocess.call(f'cvlc --play-and-exit "{sound_file}" 2> /dev/null', shell=True)
-
+        sound_file = os.path.join(main_folder, "dzwiek", "koniec.wav")
+#        playsound(sound_file)
+        pygame.mixer.music.load(sound_file)
+        pygame.mixer.music.play()
+        
+    # if dzwiek:
+    #     if system_name == "Windows":
+    #         # Ensure the correct path to VLC
+    #         vlc_path = r"C:\Program Files\VideoLAN\VLC\vlc.exe"
+    #         # Configure subprocess to hide the VLC window
+    #         startupinfo = subprocess.STARTUPINFO()
+    #         startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
+        
+    #         # Run VLC with the specified options
+    #         subprocess.run(
+    #             [vlc_path, '--play-and-exit', '--qt-start-minimized', sound_file],  
+    #             stdout=subprocess.DEVNULL,
+    #             stderr=subprocess.DEVNULL,
+    #             startupinfo=startupinfo
+    #         )
+    #     else:
+    #         # For macOS (or Linux) using cvlc with output redirection.
+    #         subprocess.call(f'cvlc --play-and-exit "{sound_file}" 2> /dev/null', shell=True)
 
     result_window.mainloop()
 
@@ -320,7 +350,6 @@ def find_closest_match(user_input, solution):
     return alternatives[closest_index], min_distance
 
     
-
 def speak(text, voice_language):
     global USE_GOOGLE_TTS, system_name
     # W przypadku "dzięki|dziękuję|dzięks" ignorujemy wszystko po pierwszym "|"
@@ -329,20 +358,42 @@ def speak(text, voice_language):
     if USE_GOOGLE_TTS:
         try:
             tts = gTTS(text, lang=voice_language)
-            with tempfile.NamedTemporaryFile(delete=True, suffix=".mp3") as temp_audio:
+            # Create a temporary audio file with delete=False
+            with tempfile.NamedTemporaryFile(delete=False, suffix=".mp3") as temp_audio:
                 tts.save(temp_audio.name)
-                if system_name == "Windows":
-                    subprocess.run(
-                        ['ffplay', '-nodisp', '-autoexit', temp_audio.name],
-                        stdout=subprocess.DEVNULL,
-                        stderr=subprocess.DEVNULL
-                    )
-                else:
-                    subprocess.run(
-                        ["mpg123", temp_audio.name],
-                        stdout=subprocess.DEVNULL,
-                        stderr=subprocess.DEVNULL
-                    )
+                # print(f"Saving speech to: {temp_audio.name}")
+                temp_audio.close()  # Close the file handle before using it
+                
+#                playsound(temp_audio.name)
+                pygame.mixer.music.load(temp_audio.name)
+                pygame.mixer.music.play()
+#                 if system_name == "Windows":
+#                     subprocess.run(
+#                         ['ffplay', '-nodisp', '-autoexit', temp_audio.name],
+#                         stdout=subprocess.DEVNULL,
+#                         stderr=subprocess.DEVNULL
+#                     )
+#                     # Play the audio file
+# #                    playsound(temp_audio.name)
+#                 else:                    
+#                     # # Use GStreamer for playback
+#                     # pipeline = Gst.parse_launch(f"playbin uri=file://{temp_audio.name}")
+#                     # pipeline.set_state(Gst.State.PLAYING)
+#                     # # Wait for playback to finish
+#                     # bus = pipeline.get_bus()
+#                     # msg = bus.timed_pop_filtered(Gst.CLOCK_TIME_NONE, Gst.MessageType.EOS | Gst.MessageType.ERROR)
+#                     # # Cleanup
+#                     # pipeline.set_state(Gst.State.NULL)
+
+#                     # Play the audio file
+#                     playsound(temp_audio.name)
+#                     # subprocess.run(
+#                     #     ["mpg123", temp_audio.name],
+#                     #     stdout=subprocess.DEVNULL,
+#                     #     stderr=subprocess.DEVNULL
+#                     # )
+#                 os.remove(temp_audio.name)  # Remove the file after use
+#                 # print(f"File {temp_audio.name} deleted successfully.")
         except Exception as e:
             print(f"Błąd podczas syntezowania mowy (Google TTS): {e}")
     else:
@@ -350,7 +401,6 @@ def speak(text, voice_language):
             subprocess.run(["espeak-ng", "-v", voice_language, text], check=True)
         except subprocess.CalledProcessError as e:
             print(f"Błąd podczas syntezowania mowy (espeak-ng): {e}")
-
 
 def nauka(polski, angielski, powtorz, dzwiek, voice_language, sprawdzian=False):
     def on_submit(event=None):
@@ -374,17 +424,23 @@ def nauka(polski, angielski, powtorz, dzwiek, voice_language, sprawdzian=False):
             powtorz[i] = max(0, powtorz[i] - 1)
             if dzwiek:
                 sound_file = os.path.join(main_folder, "dzwiek", "prawidlowa.wav")
-                if platform.system() == "Windows":
-                    subprocess.call(
-                        ['ffplay', '-nodisp', '-autoexit', sound_file],
-                        stdout=subprocess.DEVNULL,
-                        stderr=subprocess.DEVNULL
-                    )
-                else:
-                    subprocess.call(
-                        f'cvlc --play-and-exit "{sound_file}" 2> /dev/null',
-                        shell=True
-                    )
+#                playsound(sound_file)
+                pygame.mixer.music.load(sound_file)
+                pygame.mixer.music.play()
+
+            # if dzwiek:
+            #     sound_file = os.path.join(main_folder, "dzwiek", "prawidlowa.wav")
+            #     if platform.system() == "Windows":
+            #         subprocess.call(
+            #             ['ffplay', '-nodisp', '-autoexit', sound_file],
+            #             stdout=subprocess.DEVNULL,
+            #             stderr=subprocess.DEVNULL
+            #         )
+            #     else:
+            #         subprocess.call(
+            #             f'cvlc --play-and-exit "{sound_file}" 2> /dev/null',
+            #             shell=True
+            #         )
         else:
             if not sprawdzian:
                 false_previous=True
@@ -399,17 +455,22 @@ def nauka(polski, angielski, powtorz, dzwiek, voice_language, sprawdzian=False):
             najtrudniejsze[i] += 1
             if dzwiek:
                 sound_file = os.path.join(main_folder, "dzwiek", "bledna.wav")
-                if platform.system() == "Windows":
-                    subprocess.call(
-                        ['ffplay', '-nodisp', '-autoexit', sound_file],
-                        stdout=subprocess.DEVNULL,
-                        stderr=subprocess.DEVNULL
-                    )
-                else:
-                    subprocess.call(
-                        f'cvlc --play-and-exit "{sound_file}" 2> /dev/null',
-                        shell=True
-                    )
+#                playsound(sound_file)
+                pygame.mixer.music.load(sound_file)
+                pygame.mixer.music.play()
+            # if dzwiek:
+            #     sound_file = os.path.join(main_folder, "dzwiek", "bledna.wav")
+            #     if platform.system() == "Windows":
+            #         subprocess.call(
+            #             ['ffplay', '-nodisp', '-autoexit', sound_file],
+            #             stdout=subprocess.DEVNULL,
+            #             stderr=subprocess.DEVNULL
+            #         )
+            #     else:
+            #         subprocess.call(
+            #             f'cvlc --play-and-exit "{sound_file}" 2> /dev/null',
+            #             shell=True
+            #         )
 
         remaining = sum(powtorz)
         remaining_words = sum(1 for j in powtorz if j != 0)
@@ -430,6 +491,12 @@ def nauka(polski, angielski, powtorz, dzwiek, voice_language, sprawdzian=False):
             result_label.config(text="No more words to quiz!" if j_en else "Brak słów do quizu!")
             return
 
+        if dzwiek:
+            # Synchronizowanie dźwięku z aktualizacją GUI
+            root.after(500, lambda: speak(polski[i], voice_language))  # Delikatne opóźnienie, aby dać czas na zaktualizowanie GUI
+        # if dzwiek:
+        #     speak(polski[i],voice_language)
+
         question_label.config(text="Translate the word:" if j_en else "Podaj tłumaczenie wyrazu:")
         question_label2.config(text=f"{polski[i]}" if j_en else f"{polski[i]}", fg="blue")
         remaining_label.config(
@@ -439,12 +506,6 @@ def nauka(polski, angielski, powtorz, dzwiek, voice_language, sprawdzian=False):
 )       
         entry.focus_set()
         
-        if dzwiek:
-            # Synchronizowanie dźwięku z aktualizacją GUI
-            root.after(100, lambda: speak(polski[i], voice_language))  # Delikatne opóźnienie, aby dać czas na zaktualizowanie GUI
-        # if dzwiek:
-        #     speak(polski[i],voice_language)
-
 
     # Inicjalizujemy GŁÓWNE okno (jedno!)
     root = tk.Tk()
@@ -454,25 +515,31 @@ def nauka(polski, angielski, powtorz, dzwiek, voice_language, sprawdzian=False):
     start_window = tk.Toplevel(root)
     start_window.title("Start")
     start_label = tk.Label(start_window, text="let's start!" if j_en else "zaczynamy!", font=(font_name, 24))
-    start_label.pack(pady=50)
+    start_label.pack(pady=50, padx=50)
 
     
     
     # Funkcja do zamknięcia okna startowego i uruchomienia głównego okna z pytaniem
-    def start_main_app():    
+    def start_main_app():   
         if dzwiek:
             sound_file = os.path.join(main_folder, "dzwiek", "poczatek.wav")
-            if platform.system() == "Windows":
-                subprocess.call(
-                    ['ffplay', '-nodisp', '-autoexit', sound_file],
-                    stdout=subprocess.DEVNULL,
-                    stderr=subprocess.DEVNULL
-                )
-            else:
-                subprocess.call(
-                    f'cvlc --play-and-exit "{sound_file}" 2> /dev/null',
-                    shell=True
-                )  # Odtwarzamy dźwięk
+#            playsound(sound_file)
+            pygame.mixer.music.load(sound_file)
+            pygame.mixer.music.play()
+            time.sleep(4)  # Wait for 4 seconds after playing the sound
+        # if dzwiek:
+        #     sound_file = os.path.join(main_folder, "dzwiek", "poczatek.wav")
+        #     if platform.system() == "Windows":
+        #         subprocess.call(
+        #             ['ffplay', '-nodisp', '-autoexit', sound_file],
+        #             stdout=subprocess.DEVNULL,
+        #             stderr=subprocess.DEVNULL
+        #         )
+        #     else:
+        #         subprocess.call(
+        #             f'cvlc --play-and-exit "{sound_file}" 2> /dev/null',
+        #             shell=True
+        #         )  # Odtwarzamy dźwięk
     
         start_window.destroy()  # Zamykamy okno startowe
         root.deiconify()  # Pokazujemy główne okno po muzyce
@@ -491,11 +558,11 @@ def nauka(polski, angielski, powtorz, dzwiek, voice_language, sprawdzian=False):
     question_label2.pack(pady=10)
 
     entry = tk.Entry(root, font=(font_name, 20))
-    entry.pack(pady=10)
+    entry.pack(pady=10, padx=10)
     entry.bind("<Return>", on_submit)
 
     submit_button = tk.Button(root, text="Submit" if j_en else "Zatwierdź", command=on_submit)
-    submit_button.pack(pady=10)
+    submit_button.pack(pady=10, padx=10)
 
     result_label = tk.Label(root, text="", font=(font_name, font_size_remaining))
     result_label.pack(pady=10)
@@ -522,6 +589,7 @@ def main():
     global j_en, polski, angielski, powtorz, najtrudniejsze, dzwiek, voice_language, main_folder, system_name
     # identify operating system
     system_name=platform.system()
+    tempfile.tempdir = os.path.join(main_folder, "temp")
 
     
     # Set main working directories
@@ -556,6 +624,7 @@ def main():
         j_en=j_en,
         default_yes=True  # Możesz dostosować domyślny przycisk (True/False)
     ).show()
+    pygame.mixer.init()
 
     # Pytanie o kierunek nauki
     czy_polskie_slowka = CustomAskYesNo(
