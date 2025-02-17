@@ -36,7 +36,7 @@ The graphic version is recommended, as it offers the ability to read the asked w
 
 ## Installation:
 For Windows:
-Download all the files. You can install Python from the Microsoft Store. Then, open Command Prompt (`Win + R → type cmd → Enter`) and run:
+Download all the files. Install Python, e.g. from the Microsoft Store. Then, open Command Prompt (`Win + R → type cmd → Enter`) and run:
 
 ```Command Prompt
 pip install unidecode Levenshtein pygame pyttsx3 gTTS
@@ -53,8 +53,10 @@ pip install unidecode Levenshtein pygame pyttsx3 gTTS
 
 1. Open the terminal or Command prompt in case of windows. To do it in windows type: `Win + R → type cmd → Enter`).
 2. Navigate to the Pytacz folder. (on windows type `cd "Downloads\pytacz4"` if you downloaded all the files to `Downlads` folder)
-2. Run one of the following commands, depending on your desired mode:
+2. Run one of the following commands, depending on desired mode:
 
+    Fpr text mode (linux, windows correspondingly):
+    
     ```bash
     python3 pytacz.py
     ```
@@ -63,7 +65,7 @@ pip install unidecode Levenshtein pygame pyttsx3 gTTS
     python pytacz.py
     ```
 
-    Or, for the GUI version:
+    Or, for the graphical mode:
 
     ```bash
     python3 pytacz_gui3.4.py
@@ -139,7 +141,7 @@ pip install unidecode Levenshtein pygame pyttsx3 gTTS
 1. W terminalu przejdź do folderu Pytacz.
 2. Uruchom jedną z poniższych komend, w zależności od wybranego trybu:
 
-    Tryb tekstowy:
+    Tryb tekstowy (odpowiednio linux, windows):
 
     ```bash
     python3 pytacz.py
@@ -149,7 +151,7 @@ pip install unidecode Levenshtein pygame pyttsx3 gTTS
     python pytacz.py
     ```
 
-    Dla wersji GUI:
+    tryb graficzny (odpowiednio linux, windows):
 
     ```bash
     python3 pytacz_gui3.4.py
