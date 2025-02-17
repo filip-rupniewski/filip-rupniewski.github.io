@@ -115,7 +115,7 @@ bash run_pytacz_gui.sh
 
 You can always modify `run_pytacz_gui.sh` to match your environment name.
 
-### Pytacz 3.0 (PL)  
+# Pytacz 3.0 (PL)  
 
 **Pytacz 3.0** pomaga w nauce słownictwa.  
 
