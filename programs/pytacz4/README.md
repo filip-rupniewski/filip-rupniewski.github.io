@@ -132,7 +132,7 @@ Na koniec sesji pary słów, które sprawiły Ci największą trudność, zostan
 
 ## Demo  
 
-Możesz obejrzeć demonstrację działania programu. Pliki wideo znajdują się w folderze `demo`. Możesz również obejrzeć angielskie demo [tutaj](https://mega.nz/file/P51BkbKK#QeXFqUP9Gp2iOnp35FOTg4F8sIcvKGZINshEqhpfHic).  
+Możesz obejrzeć demonstrację działania programu. Pliki wideo znajdują się w folderze `demo`. Możesz również obejrzeć polskie demo [tutaj](https://mega.nz/file/C90wBSTa#skcDnw5jHAjXC4mK3yImJaZngIzHJ01-vX7L3ADx78I).  
 
 ---
 
