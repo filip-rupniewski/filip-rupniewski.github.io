@@ -34,17 +34,18 @@ The graphic version is recommended, as it offers the ability to read the asked w
     - `pyttsx3` (for text-to-speech conversion, required only for the GUI version and without internet access)
     - `gTTS` (for text-to-speech conversion, required only for the GUI version)
 
-for windows: 
-You can install Python from windows store. Then ppen Command Prompt (`Win + R → type cmd → Enter`) and write: 
-    ```Command Prompt
-    pip install unidecode Levenshtein pygame pyttsx3 gTTS
-    ```
-for linux:
-    ```bash
-    sudo apt install -y python3
-    pip install unidecode Levenshtein pygame pyttsx3 gTTS
-    ```
+For Windows:
+You can install Python from the Microsoft Store. Then, open Command Prompt (`Win + R → type cmd → Enter`) and run:
 
+```Command Prompt
+pip install unidecode Levenshtein pygame pyttsx3 gTTS
+```
+
+For Linux:
+```bash
+sudo apt install -y python3
+pip install unidecode Levenshtein pygame pyttsx3 gTTS
+```
 
 ## To Run the Program
 
@@ -117,14 +118,16 @@ Zaleca się korzystanie z wersji graficznej, ponieważ oferuje ona możliwość 
 
 Windows: 
 Można zainstalować Pythona z windows store. Następnie otwórz Wiersz poleceń (`Win + R → type cmd → Enter`) i wpisz: 
-    ```Wiersz poleceń
-    pip install unidecode Levenshtein pygame pyttsx3 gTTS
-    ```
+
+```Wiersz poleceń
+pip install unidecode Levenshtein pygame pyttsx3 gTTS
+```
+
 Linux:
-    ```bash
-    sudo apt install -y python3
-    pip install unidecode Levenshtein pygame pyttsx3 gTTS
-    ```
+```bash
+sudo apt install -y python3
+pip install unidecode Levenshtein pygame pyttsx3 gTTS
+```
 
 
 ## Uruchomienie programu
