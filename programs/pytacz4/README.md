@@ -2,170 +2,241 @@
 
 **Pytacz 3.0** helps you learn vocabulary.
 
-The program asks you to translate words. If you answer a question correctly, the occurrence count for that question decreases by one. If you answer incorrectly, the occurrence count increases by two. Initially, each question starts with an occurrence count of 1.
+The program asks you to translate words. Initially, each word pair starts with an occurrence count of 1. If you answer correctly, the occurrence count for that pair decreases by one, and you proceed to the next question. If you answer incorrectly, three things will happen:  
+1. The corrected answer will be displayed, with capital letters highlighting the incorrect letters in your response.  
+2. The occurrence count for that word pair will increase by two.  
+3. The next question will repeat the same pair.  
 
-You can see both the number of questions left and the number of unique questions remaining. When all occurrence counts reach 0, your learning session is over – you've mastered the vocabulary!
+You can see both the total number of questions left and the number of unique word pairs remaining. When all occurrence counts reach 0, your learning session is over – you've mastered the vocabulary!
 
 At the end of the session, the word pairs you struggled with the most are saved in the `"najtrudniejsze"` folder.
 
 ## Demo
 
-You can watch a demonstration of how the program works. The video files are located in the `demo` folder. You can watch the english demo also [here](https://mega.nz/file/P51BkbKK#QeXFqUP9Gp2iOnp35FOTg4F8sIcvKGZINshEqhpfHic).
+You can watch a demonstration of how the program works. The video files are located in the `demo` folder. You can also watch the English demo [here](https://mega.nz/file/P51BkbKK#QeXFqUP9Gp2iOnp35FOTg4F8sIcvKGZINshEqhpfHic).
 
+## GUI
+
+The program is available in both text-based and graphical versions.  
+
+- In **text mode**, the current occurrence count for each question is displayed in a table at the top.  
+- The **graphical version** is recommended, as it provides the option to read words aloud. However, it is currently only supported on Linux and macOS.  
+
+### Screenshots
+
+Example screenshots of the graphical interface:
+
+**English version:**  
+![English GUI](demo/window_en.png)
+
+**Polish version:**  
+![Polish GUI](demo/window_pl.png)
 
 ## Vocabulary
 
-Each file in the `do_nauki` folder consists of two columns of words. By default, these are Polish words and their English translations (separated by semicolons). You can add or modify these files as needed. You can also add comments to the files by starting each line with a `#`.
-
-## GUI
-
-There are text-based and graphic versions of the program. In text-only mode, the current occurrence count for each question is displayed in a table at the top.  
-The graphic version is recommended, as it offers the ability to read the asked words aloud. However, it is currently only supported on Linux (or Mac OS).
+Each file in the `do_nauki` folder contains two columns of words. By default, these are Polish words and their English translations (separated by semicolons). You can modify or add files as needed. Comments can be added by starting a line with `#`.
 
 ## Required Packages
 
-- Python 3
-- Python libraries (installable via pip):
-    - `unidecode`
-    - `Levenshtein`
-    - `pygame`
-    - `pyttsx3` (for text-to-speech conversion, required only for the GUI version and no internet connection)
-    - `gTTS` (for text-to-speech conversion, required only for the GUI version)
+- Python 3  
+- The following Python libraries (installable via pip):  
+  - `unidecode`  
+  - `Levenshtein`  
+  - `pygame`  
+  - `pyttsx3` (for text-to-speech conversion; required only for the GUI version, with no internet connection needed)  
+  - `gTTS` (for text-to-speech conversion; required only for the GUI version)  
 
-## Installation:
-For Windows:
+## Installation
 
-Download all the files. Install Python, e.g. from the Microsoft Store. Then, open Command Prompt (`Win + R → type cmd → Enter`) and run:
+### Windows:
 
-```Command Prompt
-pip install unidecode Levenshtein pygame pyttsx3 gTTS
-```
+1. Download all files.  
+2. Install Python (e.g., from the Microsoft Store).  
+3. Open Command Prompt (`Win + R → type cmd → Enter`) and run:  
 
-For Linux:
+   ```Command
+   pip install unidecode Levenshtein pygame pyttsx3 gTTS
+   ```
 
-Download all the files. Then write into terminal
+### Linux:
+
+1. Download all files.  
+2. Open the terminal and run:  
+
+   ```bash
+   sudo apt install -y python3
+   pip install unidecode Levenshtein pygame pyttsx3 gTTS
+   ```
+
+### macOS:
+
+1. Download all files.  
+2. Install Python if it is not already installed (you can install it via Homebrew).  
+3. Open the Terminal and run:  
+
+   ```bash
+   brew install python3
+   pip3 install unidecode Levenshtein pygame pyttsx3 gTTS
+   ```
+
+## Running the Program
+
+1. Open the terminal (or Command Prompt for Windows).  
+   - On Windows: `Win + R → type cmd → Enter`  
+2. Navigate to the Pytacz folder.  
+   - On Windows: `cd "Downloads\pytacz4"` (assuming the files are in the `Downloads` folder)  
+3. Run one of the following commands, depending on the desired mode:
+
+   - **Text mode (Linux/macOS/Windows):**  
+     ```bash
+     python3 pytacz.py
+     ```
+     or  
+     ```Command
+     python pytacz.py
+     ```
+
+   - **Graphical mode:**  
+     ```bash
+     python3 pytacz_gui3.4.py
+     ```
+     or  
+     ```Command
+     python pytacz_gui3.4.py
+     ```
+
+If you're using a Python virtual environment on Linux or macOS (e.g., `myenv` in this case), you can run:
+
 ```bash
-sudo apt install -y python3
-pip install unidecode Levenshtein pygame pyttsx3 gTTS
+bash run_pytacz_gui.sh
 ```
 
-## To Run the Program
+You can always modify `run_pytacz_gui.sh` to match your environment name.
 
-1. Open the terminal or Command prompt in case of windows. To do it in windows type: `Win + R → type cmd → Enter`).
-2. Navigate to the Pytacz folder. (on windows type `cd "Downloads\pytacz4"` if you downloaded all the files to `Downlads` folder)
-2. Run one of the following commands, depending on desired mode:
+### Pytacz 3.0 (PL)  
 
-    For text mode (linux, windows correspondingly):
-    
-    ```bash
-    python3 pytacz.py
-    ```
+**Pytacz 3.0** pomaga w nauce słownictwa.  
 
-    ```Command prompt (windows)
-    python pytacz.py
-    ```
+Program zadaje pytania o tłumaczenie słów. Na początku każda para słów ma liczbę wystąpień równą 1. Jeśli odpowiesz poprawnie, liczba wystąpień dla tej pary zmniejszy się o jeden, a następnie przejdziesz do kolejnego pytania. Jeśli odpowiesz błędnie, nastąpią trzy rzeczy:  
+1. Zostanie wyświetlona poprawna odpowiedź, a błędne litery w Twojej odpowiedzi zostaną wyróżnione wielkimi literami.  
+2. Liczba wystąpień dla tej pary wzrośnie o dwa.  
+3. Kolejne pytanie będzie dotyczyć tej samej pary słów.  
 
-    Or, for the graphical mode:
+Możesz zobaczyć zarówno całkowitą liczbę pytań, które pozostały, jak i liczbę unikalnych par słów. Gdy wszystkie liczby wystąpień osiągną 0, Twoja sesja nauki się zakończy – opanowałeś słownictwo!  
 
-    ```bash
-    python3 pytacz_gui3.4.py
-    ```
+Na koniec sesji pary słów, które sprawiły Ci największą trudność, zostaną zapisane w folderze `"najtrudniejsze"`.  
 
-    ```Command prompt (windows)
-    python pytacz_gui3.4.py
-    ```
+---
 
-If you'd like to run the program inside a Python environment on Linux, in my case it is myenv, you can simply execute:
+## Demo  
 
-    ```bash
-    bash run_pytacz_gui.sh
-    ```
-You can always change the corresponding name in run_pytacz_gui.sh to agree with your environment name.
-    
-# Pytacz 3.0 (PL)
+Możesz obejrzeć demonstrację działania programu. Pliki wideo znajdują się w folderze `demo`. Możesz również obejrzeć angielskie demo [tutaj](https://mega.nz/file/P51BkbKK#QeXFqUP9Gp2iOnp35FOTg4F8sIcvKGZINshEqhpfHic).  
 
-**Pytacz 3.0** pomaga w nauce słownictwa.
+---
 
-Program prosi o tłumaczenie słów. Jeśli odpowiedź jest poprawna, liczba wystąpień danego pytania zmniejsza się o jeden. Jeśli odpowiedź jest niepoprawna, liczba wystąpień zwiększa się o dwa. Początkowo każde pytanie zaczyna się z liczbą wystąpień równą 1.
+## Interfejs graficzny  
 
-Pod pytaniem wyświetla się zarówno liczbę pozostałych pytań, jak i liczbę unikalnych pytań, które zostały. Gdy wszystkie liczby wystąpień osiągną 0, Twoja sesja nauki jest zakończona – nauczyłeś się słówek!
+Program jest dostępny w wersji tekstowej oraz graficznej.  
 
-Pary słów, z którymi miałeś największe trudności, zostaną zapisane w folderze `"najtrudniejsze"`.
+- W **trybie tekstowym** aktualna liczba wystąpień dla każdego pytania jest wyświetlana w tabeli na górze ekranu.  
+- **Wersja graficzna** jest zalecana, ponieważ umożliwia odczytywanie słów na głos. Jednak obecnie działa tylko na systemach Linux i macOS.  
 
-## Demo
+### Zrzuty ekranu  
 
-Filmy demonstracyjne przedstawiające działanie programu znajdują się w folderze `demo`.  
-Możesz także obejrzeć polskie demo w przeglądarce [tutaj](https://mega.nz/file/C90wBSTa#skcDnw5jHAjXC4mK3yImJaZngIzHJ01-vX7L3ADx78I).
+Przykładowe zrzuty ekranu interfejsu graficznego:  
 
-Zmiany:
+**Wersja angielska:**  
+![English GUI](demo/window_en.png)  
 
-## Słownictwo
+**Wersja polska:**  
+![Polish GUI](demo/window_pl.png)  
 
-Każdy plik w folderze `do_nauki` składa się z dwóch kolumn słów. Domyślnie są to polskie słowa i ich angielskie tłumaczenia (oddzielone średnikami). Możesz dodać lub zmodyfikować te pliki w zależności od potrzeb. Możesz również dodawać komentarze do plików, zaczynając każdy wiersz od `#`.
+---
 
-## GUI
+## Słownictwo  
 
-Program oferuje wersję tekstową oraz graficzną. W trybie tylko tekstowym liczba wystąpień dla każdego pytania jest wyświetlana w tabeli na górze.  
-Zaleca się korzystanie z wersji graficznej, ponieważ oferuje ona możliwość odczytu na głos zadanych słów. Jednak jest ona obecnie obsługiwana tylko w systemie Linux (lub Mac OS).
+Każdy plik w folderze `do_nauki` zawiera dwie kolumny słów. Domyślnie są to polskie słowa oraz ich angielskie tłumaczenia (oddzielone średnikami). Możesz dowolnie edytować lub dodawać nowe pliki. Możesz również dodawać komentarze, rozpoczynając linie od `#`.  
 
-## Wymagane pakiety
+---
 
-- Python 3
-- Biblioteki Pythona (do zainstalowania za pomocą pip):
-    - `unidecode`
-    - `python-Levenshtein`
-    - `pygame`
-    - `pyttsx3` (do konwersji tekstu na mowę, wymagane tylko dla wersji GUI i tylko w przypadku braku dostępu do internetu)
-    - `gTTS` (do konwersji tekstu na mowę, wymagane tylko dla wersji GUI)
+## Wymagane pakiety  
 
-## Instalacja
+- Python 3  
+- Następujące biblioteki Pythona (można zainstalować za pomocą `pip`):  
+  - `unidecode`  
+  - `Levenshtein`  
+  - `pygame`  
+  - `pyttsx3` (do syntezatora mowy; wymagane tylko dla wersji graficznej, działa bez internetu)  
+  - `gTTS` (do syntezatora mowy; wymagane tylko dla wersji graficznej)  
 
-Windows: 
+---
 
-Pobierz wszystkie pliki. Zainstaluj Pythona (np. ze sklepu Windows). Następnie otwórz Wiersz poleceń (`Win + R → type cmd → Enter`) i wpisz: 
+## Instalacja  
 
-```Wiersz poleceń
-pip install unidecode Levenshtein pygame pyttsx3 gTTS
-```
+### Windows:  
 
-Linux:
+1. Pobierz wszystkie pliki.  
+2. Zainstaluj Pythona (np. ze sklepu Microsoft Store).  
+3. Otwórz Wiersz polecenia (`Win + R → wpisz cmd → Enter`) i uruchom:  
 
-Pobierz wszystkie pliki. Następnie wpisz w terminal
+   ```Command
+   pip install unidecode Levenshtein pygame pyttsx3 gTTS
+   ```
+
+### Linux:  
+
+1. Pobierz wszystkie pliki.  
+2. Otwórz terminal i wpisz:  
+
+   ```bash
+   sudo apt install -y python3
+   pip install unidecode Levenshtein pygame pyttsx3 gTTS
+   ```
+
+### macOS:  
+
+1. Pobierz wszystkie pliki.  
+2. Jeśli Python nie jest jeszcze zainstalowany, możesz go zainstalować przez Homebrew.  
+3. Otwórz Terminal i wpisz:  
+
+   ```bash
+   brew install python3
+   pip3 install unidecode Levenshtein pygame pyttsx3 gTTS
+   ```
+
+---
+
+## Uruchamianie programu  
+
+1. Otwórz terminal (lub Wiersz polecenia w Windows).  
+   - W Windows: `Win + R → wpisz cmd → Enter`  
+2. Przejdź do folderu Pytacz.  
+   - W Windows: `cd "Downloads\pytacz4"` (zakładając, że pliki znajdują się w folderze `Downloads`)  
+3. Uruchom jedną z poniższych komend, w zależności od wybranego trybu:
+
+   - **Tryb tekstowy (Linux/macOS/Windows):**  
+     ```bash
+     python3 pytacz.py
+     ```
+     lub  
+     ```Command
+     python pytacz.py
+     ```
+
+   - **Tryb graficzny:**  
+     ```bash
+     python3 pytacz_gui3.4.py
+     ```
+     lub  
+     ```Command
+     python pytacz_gui3.4.py
+     ```
+
+Jeśli korzystasz z wirtualnego środowiska Pythona na Linuxie lub macOS (np. `myenv`), możesz uruchomić program poleceniem:
+
 ```bash
-sudo apt install -y python3
-pip install unidecode Levenshtein pygame pyttsx3 gTTS
+bash run_pytacz_gui.sh
 ```
 
+Możesz również zmodyfikować nazwę w pliku `run_pytacz_gui.sh`, aby dopasować ją do swojej konfiguracji środowiska.  
 
-## Uruchomienie programu
-
-1. W terminalu przejdź do folderu Pytacz.
-2. Uruchom jedną z poniższych komend, w zależności od wybranego trybu:
-
-    Tryb tekstowy (odpowiednio linux, windows):
-
-    ```bash
-    python3 pytacz.py
-    ```
-
-    ```Command prompt (windows)
-    python pytacz.py
-    ```
-
-    tryb graficzny (odpowiednio linux, windows):
-
-    ```bash
-    python3 pytacz_gui3.4.py
-    ```
-    
-    ```Command prompt (windows)
-    python pytacz_gui3.4.py
-    ```
-    
-Jeśli chcesz uruchomić program w oddzielnym środowisku Python pod linuxem, w tym przypadku `myenv`, po prostu wykonaj:
-
-    ```bash
-    bash run_pytacz_gui.sh
-    ```
-    
-lub zmień `myenv` na odpowiednią nazwę w `run_pytacz_gui.sh`. 
