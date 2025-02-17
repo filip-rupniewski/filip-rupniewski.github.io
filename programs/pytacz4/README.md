@@ -24,18 +24,17 @@ The graphic version is recommended, as it offers the ability to read the asked w
 
 ## Required Packages
 
-- VLC (for sound, if desired)
-- ffmpeg (for sound, if desired in windows) 
 - Python 3
 - Python libraries (installable via pip):
     - `unidecode`
     - `Levenshtein`
     - `pygame`
-    - `pyttsx3` (for text-to-speech conversion, required only for the GUI version and without internet access)
+    - `pyttsx3` (for text-to-speech conversion, required only for the GUI version and no internet connection)
     - `gTTS` (for text-to-speech conversion, required only for the GUI version)
 
 ## Installation:
 For Windows:
+
 Download all the files. Install Python, e.g. from the Microsoft Store. Then, open Command Prompt (`Win + R → type cmd → Enter`) and run:
 
 ```Command Prompt
@@ -43,6 +42,7 @@ pip install unidecode Levenshtein pygame pyttsx3 gTTS
 ```
 
 For Linux:
+
 Download all the files. Then write into terminal
 ```bash
 sudo apt install -y python3
@@ -110,7 +110,6 @@ Zaleca się korzystanie z wersji graficznej, ponieważ oferuje ona możliwość 
 
 ## Wymagane pakiety
 
-- VLC (do obsługi dźwięku, jeśli jest to wymagane)
 - Python 3
 - Biblioteki Pythona (do zainstalowania za pomocą pip):
     - `unidecode`
@@ -122,6 +121,7 @@ Zaleca się korzystanie z wersji graficznej, ponieważ oferuje ona możliwość 
 ## Instalacja
 
 Windows: 
+
 Pobierz wszystkie pliki. Zainstaluj Pythona (np. ze sklepu Windows). Następnie otwórz Wiersz poleceń (`Win + R → type cmd → Enter`) i wpisz: 
 
 ```Wiersz poleceń
@@ -129,6 +129,7 @@ pip install unidecode Levenshtein pygame pyttsx3 gTTS
 ```
 
 Linux:
+
 Pobierz wszystkie pliki. Następnie wpisz w terminal
 ```bash
 sudo apt install -y python3
