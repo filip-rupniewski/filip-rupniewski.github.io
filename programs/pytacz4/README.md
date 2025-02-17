@@ -20,7 +20,7 @@ You can watch a demonstration of how the program works. The video files are loca
 The program is available in both text-based and graphical versions.  
 
 - In **text mode**, the current occurrence count for each question is displayed in a table at the top.  
-- The **graphical version** is recommended, as it provides the option to read words aloud. However, it is currently only supported on Linux and macOS.  
+- The **graphical version** is recommended, as it provides the option to read words aloud. 
 
 ### Screenshots
 
@@ -139,7 +139,7 @@ Możesz obejrzeć demonstrację działania programu. Pliki wideo znajdują się 
 Program jest dostępny w wersji tekstowej oraz graficznej.  
 
 - W **trybie tekstowym** aktualna liczba wystąpień dla każdego pytania jest wyświetlana w tabeli na górze ekranu.  
-- **Wersja graficzna** jest zalecana, ponieważ umożliwia odczytywanie słów na głos. Jednak obecnie działa tylko na systemach Linux i macOS.  
+- **Wersja graficzna** jest zalecana, ponieważ umożliwia odczytywanie słów na głos. 
 
 ### Zrzuty ekranu  
 
