@@ -38,8 +38,6 @@ Example screenshots of the graphical interface:
 
 ## Vocabulary
 
-Here’s the corrected version:  
-
 Each file in the `do_nauki` folder contains two columns of words. By default, these are Polish words and their English translations (separated by semicolons). Different variants of a word can be entered by separating them with a pipe `|`. You can modify or add files as needed. Comments can be added by starting a line with `#`.
 
 ---
