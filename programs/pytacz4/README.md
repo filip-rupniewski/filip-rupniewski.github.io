@@ -99,29 +99,29 @@ Each file in the `do_nauki` folder contains two columns of words. By default, th
 
    - **Text mode (Linux/macOS/Windows):**  
      ```bash
-     python3 pytacz.py
+     python3 pytacz_text.py
      ```
      or  
      ```Command
-     python pytacz.py
+     python pytacz_text.py
      ```
 
    - **Graphical mode:**  
      ```bash
-     python3 pytacz_gui3.4.py
+     python3 pytacz_gui4.0.py
      ```
      or  
      ```Command
-     python pytacz_gui3.4.py
+     python pytacz_gui4.0.py
      ```
 
 If you're using a Python virtual environment on Linux or macOS (e.g., `myenv` in this case), you can run:
 
 ```bash
-bash run_pytacz_gui.sh
+bash run_pytacz_gui4.0.sh
 ```
 
-You can always modify `run_pytacz_gui.sh` to match your environment name.
+You can always modify `run_pytacz_gui4.0.sh` to match your environment name.
 
 ---
 
@@ -227,27 +227,27 @@ Każdy plik w folderze `do_nauki` zawiera dwie kolumny słów. Domyślnie są to
 
    - **Tryb tekstowy (Linux/macOS/Windows):**  
      ```bash
-     python3 pytacz.py
+     python3 pytacz_text.py
      ```
      lub  
      ```Command
-     python pytacz.py
+     python pytacz_text.py
      ```
 
    - **Tryb graficzny:**  
      ```bash
-     python3 pytacz_gui3.4.py
+     python3 pytacz_gui4.0.py
      ```
      lub  
      ```Command
-     python pytacz_gui3.4.py
+     python pytacz_gui4.0.py
      ```
 
 Jeśli korzystasz z wirtualnego środowiska Pythona na Linuxie lub macOS (np. `myenv`), możesz uruchomić program poleceniem:
 
 ```bash
-bash run_pytacz_gui.sh
+bash run_pytacz_gui4.0.sh
 ```
 
-Możesz również zmodyfikować nazwę w pliku `run_pytacz_gui.sh`, aby dopasować ją do swojej konfiguracji środowiska.  
+Możesz również zmodyfikować nazwę w pliku `run_pytacz_gui4.0.sh`, aby dopasować ją do swojej konfiguracji środowiska.  
 
