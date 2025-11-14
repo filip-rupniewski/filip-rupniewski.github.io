@@ -21,6 +21,7 @@
   "homepage": "https://github.com/filip-rupniewski/filip-rupniewski.github.io#readme",
   "description": "",
   "dependencies": {
-    "@supabase/supabase-js": "^2.81.1"
+    "@supabase/supabase-js": "^2.81.1",
+    "axios": "^1.13.2"
   }
 }

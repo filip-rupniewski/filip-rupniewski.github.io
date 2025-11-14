@@ -7,21 +7,16 @@ const supabaseKey = process.env.SUPABASE_ANON_KEY;
 const supabase = createClient(supabaseUrl, supabaseKey);
 
 module.exports = async (req, res) => {
-  // --- START OF CORS HANDLING ---
-  // Set CORS headers to allow requests from your GitHub Pages site
+  // CORS Headers (keep these as they are)
   res.setHeader('Access-Control-Allow-Origin', 'https://filip-rupniewski.github.io'); // IMPORTANT: REPLACE WITH YOUR GITHUB PAGES URL
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 
-  // Handle the browser's preflight OPTIONS request
   if (req.method === 'OPTIONS') {
-    res.status(204).end(); // Respond with 204 No Content
+    res.status(204).end();
     return;
   }
-  // --- END OF CORS HANDLING ---
 
-
-  // Handle the actual POST request from your analytics script
   if (req.method === 'POST') {
     try {
       const data = req.body;
@@ -30,7 +25,15 @@ module.exports = async (req, res) => {
       data.ip_address = req.headers['x-forwarded-for']?.split(',').shift() || req.socket.remoteAddress;
       data.timestamp = new Date().toISOString();
 
-      // Your existing logic to insert data into Supabase
+      // --- NEW GEOLOCATION LOGIC (Vercel Method) ---
+      // Read the country and city from Vercel's injected headers
+      data.country = req.headers['x-vercel-ip-country'] || 'Unknown';
+      data.city = req.headers['x-vercel-ip-city'] || 'Unknown';
+      // You can also get the state/region if you want
+      // data.region = req.headers['x-vercel-ip-country-region'] || 'Unknown';
+      // ---------------------------------------------
+
+      // Insert data into Supabase
       const { error } = await supabase.from('analytics').insert([data]);
 
       if (error) {
@@ -46,7 +49,6 @@ module.exports = async (req, res) => {
     }
   }
 
-  // If the method is not POST or OPTIONS, return 405 Method Not Allowed
   res.setHeader('Allow', ['POST', 'OPTIONS']);
   res.status(405).json({ error: `Method ${req.method} Not Allowed` });
 };
