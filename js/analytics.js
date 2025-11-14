@@ -28,7 +28,7 @@ async function trackEvent(actionName, additionalData = {}) {
     }
 
     // Send to your Vercel API endpoint
-    const response = await fetch('https://[website-name]-github-io-analytic.vercel.app/api/track', {
+    const response = await fetch('https://filip-rupniewski-github-io-analytic.vercel.app/api/track', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data)
