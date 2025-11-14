@@ -18,7 +18,7 @@ module.exports = async (req, res) => {
   // data.country = response.data.country_name;
   // data.city = response.data.city;
 
-  const { error } = await supabase.from('analytics_events').insert([data]); // Insert into your Supabase table (change table name if needed)
+  const { error } = await supabase.from('analytics').insert([data]); // Insert into your Supabase table
 
   if (error) {
     console.error(error);
