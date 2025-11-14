@@ -27,10 +27,13 @@ module.exports = async (req, res) => {
 
       // --- NEW GEOLOCATION LOGIC (Vercel Method) ---
       // Read the country and city from Vercel's injected headers
+      // New
+      const city = req.headers['x-vercel-ip-city'];
+      const region = req.headers['x-vercel-ip-country-region'];
+
       data.country = req.headers['x-vercel-ip-country'] || 'Unknown';
-      data.city = req.headers['x-vercel-ip-city'] || 'Unknown';
-      // You can also get the state/region if you want
-      // data.region = req.headers['x-vercel-ip-country-region'] || 'Unknown';
+      data.city = [city, region].filter(Boolean).join(', ') || 'Unknown';
+
       // ---------------------------------------------
 
       // Insert data into Supabase
