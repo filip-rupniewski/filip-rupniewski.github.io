@@ -9,7 +9,7 @@ const supabase = createClient(supabaseUrl, supabaseKey);
 module.exports = async (req, res) => {
   // --- START OF CORS HANDLING ---
   // Set CORS headers to allow requests from your GitHub Pages site
-  res.setHeader('Access-Control-Allow-Origin', 'https://[your-username].github.io'); // IMPORTANT: REPLACE WITH YOUR GITHUB PAGES URL
+  res.setHeader('Access-Control-Allow-Origin', 'https://filip-rupniewski.github.io'); // IMPORTANT: REPLACE WITH YOUR GITHUB PAGES URL
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 
