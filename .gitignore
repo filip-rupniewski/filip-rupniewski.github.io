@@ -1,0 +1,5 @@
+# Ignore node_modules (if using Node.js)
+# node_modules/
+
+#ignore supabase config folder
+supabase config/

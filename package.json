@@ -1,0 +1,26 @@
+{
+  "name": "filip-rupniewski.github.io",
+  "version": "1.0.0",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/filip-rupniewski/filip-rupniewski.github.io.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/filip-rupniewski/filip-rupniewski.github.io/issues"
+  },
+  "homepage": "https://github.com/filip-rupniewski/filip-rupniewski.github.io#readme",
+  "description": "",
+  "dependencies": {
+    "@supabase/supabase-js": "^2.81.1"
+  }
+}
